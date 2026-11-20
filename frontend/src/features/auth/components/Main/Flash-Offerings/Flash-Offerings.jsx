@@ -4,7 +4,7 @@ import { TimerSection } from "./TimerSection"
 
 const FlashOfferings= () => {
   return (
-    <div className="flex justify-between ">
+    <div className="flash-offerings-header flex justify-between ">
         <TitleSection />
         <TimerSection />
     </div>

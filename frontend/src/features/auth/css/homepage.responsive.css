@@ -1,3 +1,14 @@
+.best-deal-card {
+    min-width: 0;
+}
+
+.best-deal-card p,
+.best-deal-card h3,
+.best-deal-card span,
+.best-deal-card a {
+    overflow-wrap: anywhere;
+}
+
 @media (max-width: 768px) {
     .home-page>section:not(:first-child) {
         margin-top: 3rem;
@@ -112,6 +123,133 @@
 }
 
 @media (max-width: 420px) {
+    .best-deal-card .product-card-hover-overlay {
+        padding: 0.375rem;
+    }
+
+    .best-deal-card .product-card-hover-actions {
+        gap: 0.25rem;
+    }
+
+    .best-deal-card .product-card-quick-view {
+        padding: 0.375rem 0.25rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        white-space: nowrap;
+    }
+
+    .best-deal-card .product-card-add-button {
+        width: 2.5rem;
+        height: 2.25rem;
+    }
+
+    .best-deal-card .product-card-add-button svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .best-deal-card>div:first-child>span:first-child {
+        font-size: 0.6875rem;
+        line-height: 1rem;
+    }
+
+    .best-deal-card>a>p {
+        font-size: 0.6875rem;
+        line-height: 1rem;
+    }
+
+    .best-deal-card>a>h3 {
+        font-size: 0.9375rem;
+        line-height: 1.25rem;
+    }
+
+    .best-deal-card>a>div:first-of-type>span {
+        font-size: 0.6875rem;
+        line-height: 1rem;
+    }
+
+    .best-deal-card>a>div:last-of-type>span:first-child {
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+    }
+
+    .best-deal-card>a>div:last-of-type>span:last-child {
+        font-size: 0.8125rem;
+        line-height: 1.125rem;
+    }
+
+    .home-page>section:nth-child(3)>div.flash-offerings-header {
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+    }
+
+    .flash-title-section {
+        flex: 0 0 auto;
+    }
+
+    .flash-title-kicker {
+        font-size: 0.625rem;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    .flash-title-heading {
+        font-size: clamp(1rem, 4.3vw, 1.125rem);
+        line-height: 1.25;
+        white-space: nowrap;
+    }
+
+    .all-products-title {
+        flex: 0 0 auto;
+    }
+
+    .all-products-kicker {
+        font-size: 0.625rem;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    .all-products-heading {
+        font-size: clamp(1rem, 4.3vw, 1.125rem);
+        line-height: 1.25;
+        white-space: nowrap;
+    }
+
+    .flash-timer-section {
+        min-width: 0;
+        flex: 0 1 auto;
+        align-items: center;
+        gap: 0.375rem;
+    }
+
+    .flash-timer-label {
+        font-size: 0.8125rem;
+        line-height: 1.25;
+        white-space: nowrap;
+    }
+
+    .flash-timer-values {
+        flex: 0 0 auto;
+        gap: 0.25rem;
+    }
+
+    .flash-timer-unit {
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .flash-timer-value {
+        padding: 0.25rem 0.375rem;
+        font-size: 0.6875rem;
+        line-height: 1;
+    }
+
+    .flash-timer-separator {
+        margin-left: 0.25rem;
+        font-size: 0.6875rem;
+    }
+
     .home-page>section:nth-child(2)>div.category-card-grid:last-child {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0.5rem;

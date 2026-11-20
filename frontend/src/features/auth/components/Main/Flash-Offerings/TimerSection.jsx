@@ -22,19 +22,19 @@ export const TimerSection = () => {
     const formatTime = (time) => String(time).padStart(2, '0')
 
   return (
-    <div className='flex justify-between gap-10'>
-        <h1 className='text-[17px] font-medium text-black'>Ends In:</h1>
-        <div className='flex justify-between gap-5'>
-            <div >
-                <span className='bg-black text-white py-1 px-2 rounded'>{formatTime(hours)}</span>
-                <span className='ml-3 font-bold'>:</span>
+    <div className='flash-timer-section flex justify-between gap-10'>
+        <h1 className='flash-timer-label text-[17px] font-medium text-black'>Ends In:</h1>
+        <div className='flash-timer-values flex justify-between gap-5'>
+            <div className='flash-timer-unit'>
+                <span className='flash-timer-value bg-black text-white py-1 px-2 rounded'>{formatTime(hours)}</span>
+                <span className='flash-timer-separator ml-3 font-bold'>:</span>
             </div>
-            <div >
-                <span className='bg-black text-white py-1 px-2 rounded'>{formatTime(minutes)}</span>
-                <span className='ml-3 font-bold'>:</span>
+            <div className='flash-timer-unit'>
+                <span className='flash-timer-value bg-black text-white py-1 px-2 rounded'>{formatTime(minutes)}</span>
+                <span className='flash-timer-separator ml-3 font-bold'>:</span>
             </div>
-            <div>
-                <span className='bg-black text-white py-1 px-2 rounded'>{formatTime(second)}</span>
+            <div className='flash-timer-unit'>
+                <span className='flash-timer-value bg-black text-white py-1 px-2 rounded'>{formatTime(second)}</span>
             </div>
         </div>
 

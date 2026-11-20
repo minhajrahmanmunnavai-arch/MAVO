@@ -33,7 +33,7 @@ const Main = () => {
     <section className="mt-25 px-37">
       <FlashOfferings />
 
-      <div className="flex gap-7 flex-2/4">
+      <div className="best-deals-grid flex gap-7 flex-2/4">
 
         {BestDeals.map((product) => (
           <Cart

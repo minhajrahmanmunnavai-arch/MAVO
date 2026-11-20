@@ -15,7 +15,7 @@ const Cart = (props) => {
 
 
   return (
-    <div className="group relative mt-10 w-80 rounded-2xl border border-gray-200/80 bg-white p-3 shadow-sm transition-all duration-300 hover:border-gray-300 hover:shadow-xl">
+    <div className="best-deal-card group relative mt-10 w-80 rounded-2xl border border-gray-200/80 bg-white p-3 shadow-sm transition-all duration-300 hover:border-gray-300 hover:shadow-xl">
 
       {/* Image Container */}
       <div className="relative h-64 w-full overflow-hidden rounded-xl bg-gray-100">
@@ -54,9 +54,9 @@ const Cart = (props) => {
         </button>
 
         {/* Hover Animation Section */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 bg-linear-to-t from-black/40 via-black/10 to-transparent translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
-          <div className="grid grid-cols-[1fr_auto] gap-2">
-            <Link to={`/product/${props.id}`} className="cursor-pointer flex w-full items-center justify-center rounded-lg bg-white/95 backdrop-blur-md py-2.5 text-sm font-semibold text-gray-900 shadow-lg transition-colors hover:bg-white active:scale-[0.98]">
+        <div className="product-card-hover-overlay absolute bottom-0 left-0 right-0 p-3 bg-linear-to-t from-black/40 via-black/10 to-transparent translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
+          <div className="product-card-hover-actions grid grid-cols-[1fr_auto] gap-2">
+            <Link to={`/product/${props.id}`} className="product-card-quick-view cursor-pointer flex w-full items-center justify-center rounded-lg bg-white/95 backdrop-blur-md py-2.5 text-sm font-semibold text-gray-900 shadow-lg transition-colors hover:bg-white active:scale-[0.98]">
               Quick View
             </Link>
 
@@ -72,7 +72,7 @@ const Cart = (props) => {
                 }
               }}
               aria-label={`Add ${props.title} to cart`}
-              className="cursor-pointer flex h-10 w-12 items-center justify-center rounded-lg bg-gray-900 text-white shadow-lg transition-colors hover:bg-black active:scale-[0.98]"
+              className="product-card-add-button cursor-pointer flex h-10 w-12 items-center justify-center rounded-lg bg-gray-900 text-white shadow-lg transition-colors hover:bg-black active:scale-[0.98]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
