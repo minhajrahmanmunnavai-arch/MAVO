@@ -40,10 +40,20 @@ function runCsrfMiddleware({ method = "POST", origin, fetchSite } = {}) {
     return { statusCode, responseBody, passed };
 }
 
-test("CSRF protection rejects untrusted and cross-site mutations", () => {
+test("CSRF protection rejects untrusted origins and cross-site mutations without an origin", () => {
     assert.equal(runCsrfMiddleware({ origin: "https://attacker.example" }).statusCode, 403);
     assert.equal(runCsrfMiddleware({ fetchSite: "cross-site" }).statusCode, 403);
     assert.equal(runCsrfMiddleware({ origin: "null" }).statusCode, 403);
+});
+
+test("CSRF protection allows cross-site mutations from an allowed origin", () => {
+    assert.equal(
+        runCsrfMiddleware({
+            origin: "http://localhost:5173",
+            fetchSite: "cross-site",
+        }).passed,
+        true
+    );
 });
 
 test("CSRF protection allows same-origin mutations and safe methods", () => {

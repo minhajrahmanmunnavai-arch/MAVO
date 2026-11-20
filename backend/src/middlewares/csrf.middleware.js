@@ -13,7 +13,7 @@ function csrfProtection(req, res, next) {
     if (
         (origin && !allowedOrigins.has(origin)) ||
         origin === "null" ||
-        fetchSite === "cross-site"
+        (!origin && fetchSite === "cross-site")
     ) {
         return res.status(403).json({ message: "Request origin is not allowed." });
     }
