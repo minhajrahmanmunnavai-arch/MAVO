@@ -1,7 +1,10 @@
 
 import axios from 'axios';
 
-const apiBaseURL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+const apiBaseURL = (
+    import.meta.env.VITE_API_BASE_URL ||
+    (import.meta.env.PROD ? 'https://mavo-hzbl.onrender.com' : '')
+).replace(/\/+$/, '');
 
 export const api = axios.create({
     baseURL: apiBaseURL,

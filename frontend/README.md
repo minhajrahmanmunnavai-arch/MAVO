@@ -1,24 +1,35 @@
-# React + Vite
+# MAVO frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This is the React website built with Vite.
 
-Currently, two official plugins are available:
+## Deploy to Vercel
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Create a Vercel project with the `frontend` directory as its Root Directory.
+Use `npm run build` as the build command and `dist` as the output directory.
+The included `vercel.json` sends nested browser routes to the app entry point,
+so refreshing a product, cart, or admin route loads the React application.
 
-## React Compiler
+The frontend uses `https://mavo-hzbl.onrender.com` as its production API by
+default. To override it, set `VITE_API_BASE_URL` in the Vercel project
+environment variables to the backend origin (without an `/api` suffix).
+`VITE_SITE_URL` may be set to the canonical public website origin; otherwise,
+the Vercel production URL is used when generating `robots.txt`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Only public frontend configuration belongs in `VITE_*` variables: Vite embeds
+them in the client bundle. Never add database URLs, JWT secrets, Cloudinary
+secrets, SMTP credentials, or other private backend values to the frontend.
+Local `.env` files are ignored; use `.env.example` only for placeholders.
 
-## Expanding the Oxlint configuration
+## Backend requirements
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The backend must allow the deployed website origin in `CORS_ORIGINS` (or
+`FRONTEND_URL`) and run with `HTTPS_ENABLED=true` behind HTTPS. Axios and
+Socket.IO send credentials to the configured API. Since Vercel and Render
+domains are cross-site, cookie authentication may require
+`COOKIE_SAME_SITE=none` with `NODE_ENV=production`; browsers that block
+third-party cookies can still prevent sign-in. A custom frontend and API
+domain under the same registrable domain is preferable when available.
 
-## Authentication deployment
-
-Authentication uses `HttpOnly` cookies and does not store credentials or tokens in browser storage. In development, Vite proxies `/api` requests to `http://localhost:3000`; set `VITE_API_PROXY_TARGET` if the backend uses another address.
-
-For a separate frontend/API deployment, set `VITE_API_BASE_URL` at frontend build time and set the backend `CORS_ORIGINS` to the exact HTTPS frontend origin (comma-separated for multiple origins). Keep the frontend and API on the same site where possible and use `COOKIE_SAME_SITE=strict`. Production startup requires `HTTPS_ENABLED=true` to confirm TLS terminates at the server or trusted reverse proxy. Set `COOKIE_SAME_SITE=none` only when cross-site cookies are necessary; that requires HTTPS, and production must run with `NODE_ENV=production`. If deployed behind a reverse proxy, set `TRUST_PROXY_HOPS` to the exact number of trusted proxy hops.
-
-The backend validates required secrets and database configuration before listening, uses secure host-only cookies in production, checks mutation origins, adds security headers, and stores authentication rate limits in MongoDB so they are shared across backend replicas. Refresh sessions are stored as hashes in MongoDB and rotate during refresh. Existing users may need to sign in once after deploying this change because older refresh tokens were not stored as revocable sessions.
+Product, cart, wishlist, order, admin, chat, and notification API calls share
+the configured Axios client. Product and review image uploads use multipart
+requests through that client; uploaded image URLs are supplied by the backend.

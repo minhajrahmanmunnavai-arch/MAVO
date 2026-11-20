@@ -30,7 +30,7 @@ function getProductionSiteOrigin(siteUrl) {
   return url.origin
 }
 
-function robotsTxtPlugin(mode, siteUrl) {
+function robotsTxtPlugin(mode, siteUrl, apiBaseUrl) {
   let outputDir
 
   return {
@@ -42,7 +42,7 @@ function robotsTxtPlugin(mode, siteUrl) {
     async closeBundle() {
       if (mode !== 'production') return
 
-      const siteOrigin = getProductionSiteOrigin(siteUrl)
+      getProductionSiteOrigin(siteUrl)
       const robotsTxt = [
         'User-agent: *',
         'Allow: /',
@@ -55,7 +55,7 @@ function robotsTxtPlugin(mode, siteUrl) {
         'Disallow: /cart',
         'Disallow: /my-orders',
         'Disallow: /wishlist',
-        `Sitemap: ${siteOrigin}/sitemap.xml`,
+        `Sitemap: ${apiBaseUrl}/sitemap.xml`,
         '',
       ].join('\n')
 
@@ -71,10 +71,18 @@ export default defineConfig(({ mode }) => {
     env.VITE_SITE_URL ||
     env.FRONTEND_URL ||
     process.env.VITE_SITE_URL ||
-    process.env.FRONTEND_URL
+    process.env.FRONTEND_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL &&
+      `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
+    (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`)
+  const apiBaseUrl = (
+    env.VITE_API_BASE_URL ||
+    process.env.VITE_API_BASE_URL ||
+    'https://mavo-hzbl.onrender.com'
+  ).replace(/\/+$/, '')
 
   return {
-    plugins: [react(), tailwindcss(), robotsTxtPlugin(mode, siteUrl)],
+    plugins: [react(), tailwindcss(), robotsTxtPlugin(mode, siteUrl, apiBaseUrl)],
     server: {
       proxy: {
         '/api': {
