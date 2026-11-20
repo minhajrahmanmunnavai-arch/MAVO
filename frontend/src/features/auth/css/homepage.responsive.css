@@ -123,6 +123,30 @@
 }
 
 @media (max-width: 420px) {
+    .home-page>footer h1,
+    .home-page>footer h2 {
+        font-size: 1rem;
+        line-height: 1.25rem;
+    }
+
+    .home-page>footer>section>div:first-child>div:first-child h1 {
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+    }
+
+    .home-page>footer>section>div:first-child>div:first-child>p,
+    .home-page>footer>section>div:first-child>div:not(:first-child) p,
+    .home-page>footer>section>div:last-child>p {
+        font-size: 0.8125rem;
+        line-height: 1.25rem;
+    }
+
+    .home-page>footer nav a,
+    .home-page>footer>section>div:last-child a {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
     .best-deal-card .product-card-hover-overlay {
         padding: 0.375rem;
     }
