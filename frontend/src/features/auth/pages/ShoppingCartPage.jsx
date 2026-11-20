@@ -129,31 +129,31 @@ export default function ShoppingCartPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#faf9f7] px-5 py-8 sm:px-8 sm:py-12">
+    <main className="min-h-screen bg-[#faf9f7] px-5 py-8 sm:px-8 sm:py-12 max-[421px]:px-3 max-[421px]:py-6">
       <div className="mx-auto max-w-7xl">
-        <header className="relative overflow-hidden rounded-3xl border border-rose-100 bg-gradient-to-br from-rose-50 via-white to-amber-50 px-6 py-8 shadow-sm sm:px-9 sm:py-10">
+        <header className="relative overflow-hidden rounded-3xl border border-rose-100 bg-gradient-to-br from-rose-50 via-white to-amber-50 px-6 py-8 shadow-sm sm:px-9 sm:py-10 max-[421px]:rounded-2xl max-[421px]:px-4 max-[421px]:py-6">
           <div aria-hidden="true" className="absolute -right-10 -top-14 h-48 w-48 rounded-full bg-rose-100/60 blur-2xl" />
-          <div className="relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between max-[421px]:gap-4">
             <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 rounded-full border border-rose-100 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-rose-700">
+              <span className="inline-flex items-center gap-2 rounded-full border border-rose-100 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-rose-700 max-[421px]:text-[0.625rem]">
                 <Sparkles size={14} />
                 Ready when you are
               </span>
-              <h1 className="mt-4 font-serif text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
+              <h1 className="mt-4 font-serif text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl max-[421px]:mt-3 max-[421px]:text-[clamp(1.25rem,5vw,1.5rem)] max-[421px]:leading-tight">
                 Shopping cart
               </h1>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-stone-600 sm:text-base">
+              <p className="mt-3 max-w-xl text-sm leading-6 text-stone-600 sm:text-base max-[421px]:text-[0.8125rem] max-[421px]:leading-5">
                 Review your picks, adjust quantities, and get everything ready for checkout.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-2xl border border-white bg-white/85 px-4 py-3 text-sm font-medium text-stone-700 shadow-sm">
+            <div className="flex flex-wrap items-center gap-3 max-[421px]:gap-2">
+              <span className="inline-flex items-center gap-2 rounded-2xl border border-white bg-white/85 px-4 py-3 text-sm font-medium text-stone-700 shadow-sm max-[421px]:px-3 max-[421px]:py-2 max-[421px]:text-[0.8125rem]">
                 <ShoppingBag size={17} className="text-rose-600" />
                 {cartCount} {cartCount === 1 ? "item" : "items"}
               </span>
               <Link
                 to="/"
-                className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-700 transition hover:border-stone-300 hover:bg-stone-50"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-700 transition hover:border-stone-300 hover:bg-stone-50 max-[421px]:px-3 max-[421px]:py-2 max-[421px]:text-[0.6875rem]"
               >
                 <ArrowLeft size={16} />
                 Continue shopping
@@ -163,7 +163,7 @@ export default function ShoppingCartPage() {
         </header>
 
         {(loadError || actionError) && (
-          <p className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+          <p className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 max-[421px]:text-[0.8125rem]" role="alert">
             {actionError || loadError}
           </p>
         )}
@@ -185,19 +185,19 @@ export default function ShoppingCartPage() {
             <div className="h-64 animate-pulse rounded-2xl bg-stone-200" />
           </div>
         ) : cartItems.length === 0 ? (
-          <div className="mt-8 rounded-3xl border border-stone-200 bg-white px-6 py-14 text-center shadow-sm sm:py-20">
+          <div className="mt-8 rounded-3xl border border-stone-200 bg-white px-6 py-14 text-center shadow-sm sm:py-20 max-[421px]:rounded-2xl max-[421px]:px-4 max-[421px]:py-10">
             <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-50 text-rose-600">
               <ShoppingBag size={28} />
             </span>
-            <h2 className="mt-5 font-serif text-2xl font-semibold text-stone-900">
+            <h2 className="mt-5 font-serif text-2xl font-semibold text-stone-900 max-[421px]:text-[clamp(1rem,4.3vw,1.125rem)]">
               Your cart is waiting
             </h2>
-            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-stone-600">
+            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-stone-600 max-[421px]:text-[0.8125rem]">
               Browse the collection and add something you love to get started.
             </p>
             <Link
               to="/"
-              className="mt-6 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-stone-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-rose-700"
+              className="mt-6 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-stone-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-rose-700 max-[421px]:text-[0.6875rem]"
             >
               Explore products
               <ArrowRight size={16} />
@@ -206,7 +206,7 @@ export default function ShoppingCartPage() {
         ) : (
           <div className="mt-8 grid items-start gap-6 lg:grid-cols-[1fr_340px]">
             <section aria-label="Cart items" className="space-y-4">
-              <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-stone-200 bg-white px-5 py-4 text-sm font-semibold text-stone-800 shadow-sm">
+              <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-stone-200 bg-white px-5 py-4 text-sm font-semibold text-stone-800 shadow-sm max-[421px]:gap-2 max-[421px]:px-3 max-[421px]:py-3 max-[421px]:text-[0.8125rem]">
                 <input
                   type="checkbox"
                   checked={allSelected}
@@ -214,14 +214,14 @@ export default function ShoppingCartPage() {
                   className="h-4 w-4 cursor-pointer rounded border-stone-300 text-stone-900 focus:ring-stone-900"
                 />
                 Select all items to order
-                <span className="ml-auto text-xs font-medium text-stone-500">
+                <span className="ml-auto text-xs font-medium text-stone-500 max-[421px]:text-[0.6875rem]">
                   {selectedItems.length} selected
                 </span>
               </label>
               {cartItems.map((item) => (
                 <article
                   key={item.id}
-                  className={`flex flex-wrap items-center gap-4 rounded-2xl border bg-white p-4 shadow-sm transition sm:p-5 ${
+                  className={`flex flex-wrap items-center gap-4 rounded-2xl border bg-white p-4 shadow-sm transition sm:p-5 max-[421px]:gap-3 max-[421px]:rounded-xl max-[421px]:p-3 ${
                     selectedItems.some((selectedItem) => selectedItem.id === item.id)
                       ? "border-rose-200"
                       : "border-stone-200"
@@ -248,21 +248,21 @@ export default function ShoppingCartPage() {
                   <img
                     src={item.img}
                     alt={item.productTitle}
-                    className="h-24 w-24 shrink-0 rounded-xl bg-stone-100 object-cover"
+                    className="h-24 w-24 shrink-0 rounded-xl bg-stone-100 object-cover max-[421px]:h-20 max-[421px]:w-20"
                   />
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-stone-500 max-[421px]:text-[0.625rem]">
                       {item.shopName || "MAVO collection"}
                     </p>
-                    <h2 className="mt-1 font-semibold text-stone-900">
+                    <h2 className="mt-1 break-words font-semibold text-stone-900 max-[421px]:text-[0.9375rem]">
                       {item.productTitle}
                     </h2>
-                    <p className="mt-2 text-base font-semibold text-stone-900">
+                    <p className="mt-2 text-base font-semibold text-stone-900 max-[421px]:text-[0.8125rem]">
                       ৳{Number(item.price).toFixed(2)}
-                      <span className="ml-1 text-xs font-normal text-stone-500">each</span>
+                      <span className="ml-1 text-xs font-normal text-stone-500 max-[421px]:text-[0.625rem]">each</span>
                     </p>
                   </div>
-                  <div className="ml-auto flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-end">
+                  <div className="ml-auto flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-end max-[421px]:gap-2">
                     <div className="inline-flex items-center rounded-full border border-stone-200 bg-stone-50 p-1">
                       <button
                         type="button"
@@ -300,7 +300,7 @@ export default function ShoppingCartPage() {
                       onClick={() =>
                         handleCartAction(item.id, () => removeFromCart(item.id))
                       }
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold text-stone-500 transition hover:bg-red-50 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold text-stone-500 transition hover:bg-red-50 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-50 max-[421px]:text-[0.6875rem]"
                     >
                       <Trash2 size={14} />
                       Remove
@@ -310,27 +310,27 @@ export default function ShoppingCartPage() {
               ))}
             </section>
 
-            <aside className="h-fit rounded-2xl border border-stone-200 bg-white p-5 shadow-sm lg:sticky lg:top-6 sm:p-6">
+            <aside className="h-fit rounded-2xl border border-stone-200 bg-white p-5 shadow-sm lg:sticky lg:top-6 sm:p-6 max-[421px]:rounded-xl max-[421px]:p-4">
               <div className="flex items-center gap-3 border-b border-stone-100 pb-4">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-700">
                   <PackageCheck size={19} />
                 </span>
                 <div>
-                  <h2 className="font-semibold text-stone-900">Order summary</h2>
-                  <p className="mt-0.5 text-xs text-stone-500">Your selected items</p>
+                  <h2 className="font-semibold text-stone-900 max-[421px]:text-[0.9375rem]">Order summary</h2>
+                  <p className="mt-0.5 text-xs text-stone-500 max-[421px]:text-[0.6875rem]">Your selected items</p>
                 </div>
               </div>
-              <div className="mt-5 flex justify-between text-sm text-stone-600">
+              <div className="mt-5 flex justify-between text-sm text-stone-600 max-[421px]:text-[0.8125rem]">
                 <span>Selected items</span>
                 <span className="font-medium text-stone-900">
                   {selectedItems.reduce((sum, item) => sum + item.quantity, 0)}
                 </span>
               </div>
-              <div className="mt-4 flex justify-between text-sm text-stone-600">
+              <div className="mt-4 flex justify-between text-sm text-stone-600 max-[421px]:text-[0.8125rem]">
                 <span>Subtotal</span>
                 <span className="font-medium text-stone-900">৳{total.toFixed(2)}</span>
               </div>
-              <div className="mt-5 flex justify-between border-t border-stone-100 pt-4 text-base font-semibold text-stone-900">
+              <div className="mt-5 flex justify-between border-t border-stone-100 pt-4 text-base font-semibold text-stone-900 max-[421px]:text-[0.9375rem]">
                 <span>Total</span>
                 <span>৳{total.toFixed(2)}</span>
               </div>
@@ -341,12 +341,12 @@ export default function ShoppingCartPage() {
                   setCheckoutStep("address");
                   setIsCheckoutOpen(true);
                 }}
-                className="mt-5 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mt-5 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-50 max-[421px]:text-[0.6875rem]"
               >
                 Continue to checkout
                 <ArrowRight size={16} />
               </button>
-              <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-xs text-stone-500">
+              <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-xs text-stone-500 max-[421px]:text-[0.625rem]">
                 <CheckCircle2 size={14} className="text-emerald-600" />
                 Secure checkout · Cash on delivery
               </p>
@@ -368,7 +368,7 @@ export default function ShoppingCartPage() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="checkout-dialog-title"
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-3xl border border-stone-200 bg-white p-6 shadow-2xl sm:p-8"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-3xl border border-stone-200 bg-white p-6 shadow-2xl sm:p-8 max-[421px]:rounded-2xl max-[421px]:p-4"
           >
             <div className="mb-6 flex items-center justify-between gap-4 border-b border-stone-100 pb-5">
               <div className="flex items-center gap-3">
@@ -379,7 +379,7 @@ export default function ShoppingCartPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-rose-700">
                     Checkout
                   </p>
-                  <h2 id="checkout-dialog-title" className="mt-1 text-xl font-semibold text-stone-900">
+                  <h2 id="checkout-dialog-title" className="mt-1 text-xl font-semibold text-stone-900 max-[421px]:text-base">
                     {checkoutStep === "address" ? "Shipping details" : "Payment method"}
                   </h2>
                 </div>
@@ -398,7 +398,7 @@ export default function ShoppingCartPage() {
               </button>
             </div>
             {actionError && (
-              <p className="mb-4 text-sm text-red-600" role="alert">
+              <p className="mb-4 text-sm text-red-600 max-[421px]:text-[0.8125rem]" role="alert">
                 {actionError}
               </p>
             )}
@@ -406,7 +406,7 @@ export default function ShoppingCartPage() {
               <button
                 type="button"
                 onClick={handleBackToShipping}
-                className="mb-3 w-full cursor-pointer rounded-xl border border-stone-200 px-4 py-2.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50"
+                className="mb-3 w-full cursor-pointer rounded-xl border border-stone-200 px-4 py-2.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50 max-[421px]:text-[0.8125rem]"
               >
                 Back to Shipping Details
               </button>
@@ -425,7 +425,7 @@ export default function ShoppingCartPage() {
                     ["region", "Region/City/District", "text", "Please input Region/City/District"],
                     ["address", "Address", "text", "House number/building/road/area"],
                   ].map(([field, label, type, placeholder]) => (
-                    <label key={field} className="block text-xs font-semibold text-stone-600">
+                    <label key={field} className="block text-xs font-semibold text-stone-600 max-[421px]:text-[0.6875rem]">
                       {label}
                       <input
                         type={type}
@@ -439,14 +439,14 @@ export default function ShoppingCartPage() {
                             [field]: event.target.value,
                           }))
                         }
-                        className="mt-1.5 w-full rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-3 text-sm text-stone-900 outline-none transition focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-100"
+                        className="mt-1.5 w-full rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-3 text-sm text-stone-900 outline-none transition focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-100 max-[421px]:px-3 max-[421px]:py-2.5 max-[421px]:text-[0.8125rem]"
                       />
                     </label>
                   ))}
                   <button
                     type="submit"
                     disabled={selectedItems.length === 0}
-                    className="w-full cursor-pointer rounded-xl bg-stone-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full cursor-pointer rounded-xl bg-stone-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-50 max-[421px]:text-[0.8125rem]"
                   >
                     Continue to Payment
                   </button>
@@ -463,10 +463,10 @@ export default function ShoppingCartPage() {
                       className="mt-0.5 h-4 w-4 cursor-pointer"
                     />
                     <span>
-                      <span className="block text-sm font-medium text-gray-900">
+                      <span className="block text-sm font-medium text-gray-900 max-[421px]:text-[0.8125rem]">
                         Cash on Delivery
                       </span>
-                      <span className="mt-1 block text-xs text-gray-500">
+                      <span className="mt-1 block text-xs text-gray-500 max-[421px]:text-[0.6875rem]">
                         Pay when your order is delivered.
                       </span>
                     </span>
@@ -474,7 +474,7 @@ export default function ShoppingCartPage() {
                   <button
                     type="submit"
                     disabled={isSubmittingOrder || selectedItems.length === 0}
-                    className="w-full cursor-pointer rounded-xl bg-stone-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full cursor-pointer rounded-xl bg-stone-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-50 max-[421px]:text-[0.8125rem]"
                   >
                     {isSubmittingOrder ? "Placing Order..." : "Place Order"}
                   </button>
