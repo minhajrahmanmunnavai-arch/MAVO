@@ -52,7 +52,7 @@ const Category = () => {
           button={elem.button}
         />
       ))}
-      <div className="flex gap- justify-between mt-7">
+      <div className="category-card-grid flex justify-between mt-7">
         {CategoryDetails.map((elem, idx) => (
           <CtaregoryItems
             key={idx}
