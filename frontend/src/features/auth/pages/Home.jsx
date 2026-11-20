@@ -1,4 +1,5 @@
 
+import "../css/homepage.responsive.css"
 import Hero from "../components/Main/Hero-section/Hero.jsx"
 import Category from "../components/Main/Category-section/Category.jsx"
 import Main from "../components/Main/Flash-Offerings/Main-Flash.jsx"

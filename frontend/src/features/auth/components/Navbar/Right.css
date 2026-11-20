@@ -1,0 +1,57 @@
+.navbar-action-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@media (max-width: 420px) {
+  .navbar-action-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .account-menu-toggle,
+  .account-menu-popup {
+    display: none;
+  }
+
+  #navbar-notifications-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: none;
+  }
+
+  #navbar-notifications-panel > section {
+    height: 100%;
+  }
+
+  #navbar-notifications-panel > section > div {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    border-radius: 0;
+  }
+
+  #navbar-notifications-panel > section > div > header {
+    flex: 0 0 auto;
+    padding: 1rem;
+  }
+
+  #navbar-notifications-panel > section > div > div:nth-child(2) {
+    min-height: 0;
+    max-height: none;
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}

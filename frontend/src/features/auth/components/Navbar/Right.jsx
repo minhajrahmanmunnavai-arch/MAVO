@@ -8,6 +8,7 @@ import { useCart } from "../../Hooks/useCart.js";
 import Loading from "../Loading/Loading.jsx";
 import ShowToast from "../Showtoast/Showtoast.jsx";
 import Notifications from "../Main/Notifications/Notifications.jsx";
+import "./Right.css";
 
 const Right = () => {
     const navigate = useNavigate();
@@ -54,25 +55,17 @@ const Right = () => {
         setIsOpen((prev) => !prev);
     };
 
-    // Logout
     const handleUserLogout = async () => {
         try {
             await handleLogout();
-
             setIsOpen(false);
-
             setToast({
                 message: "Logout successful! See you next time.",
                 type: "success",
             });
-
-            setTimeout(() => {
-                navigate("/");
-            }, 1500);
-
+            setTimeout(() => navigate("/"), 1500);
         } catch (error) {
             console.error("Logout failed:", error);
-
             setToast({
                 message:
                     error.response?.data?.message ||
@@ -106,7 +99,7 @@ const Right = () => {
                         aria-controls="navbar-notifications-panel"
                         className="relative rounded-full p-2 text-stone-700 transition-colors hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-700"
                     >
-                        <Bell aria-hidden="true" className="h-6 w-6" />
+                        <Bell aria-hidden="true" className="navbar-action-icon" />
                         {notificationCount > 0 && (
                             <span
                                 aria-hidden="true"
@@ -139,7 +132,7 @@ const Right = () => {
                     className="relative rounded-md p-1.5 transition-colors hover:bg-gray-300"
                 >
                     <svg
-                        className="h-6 w-6 text-gray-700"
+                        className="navbar-action-icon text-gray-700"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -165,6 +158,7 @@ const Right = () => {
                     className="relative rounded-md p-1.5 transition-colors hover:bg-gray-300"
                 >
                     <svg
+                        className="navbar-action-icon"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
@@ -192,10 +186,10 @@ const Right = () => {
                     onClick={toggleDropdown}
                     aria-label="Toggle account menu"
                     aria-expanded={isOpen}
-                    className="cursor-pointer rounded-md p-1.5 transition-colors hover:bg-gray-300 focus:outline-none"
+                    className="account-menu-toggle cursor-pointer rounded-md p-1.5 transition-colors hover:bg-gray-300 focus:outline-none"
                 >
                     <svg
-                        className="h-6 w-6 text-gray-700"
+                        className="navbar-action-icon text-gray-700"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -215,7 +209,7 @@ const Right = () => {
 
             {/* Account Dropdown Menu */}
             {isOpen && (
-                <div className="absolute right-0 z-50 mt-3 w-56 rounded-2xl border border-gray-100 bg-white px-2 py-3 shadow-xl">
+                <div className="account-menu-popup absolute right-0 z-50 mt-3 w-56 rounded-2xl border border-gray-100 bg-white px-2 py-3 shadow-xl">
 
                     <div className="space-y-1">
 

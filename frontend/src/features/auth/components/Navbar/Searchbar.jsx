@@ -69,7 +69,7 @@ const Searchbar = () => {
   }, [isMobileSearchOpen]);
 
   useEffect(() => {
-    if (!activeSearch) return undefined;
+    if (!activeSearch && !isMobileSearchOpen) return undefined;
 
     const handlePointerDown = (event) => {
       if (
@@ -77,6 +77,7 @@ const Searchbar = () => {
         !desktopSearchRef.current?.contains(event.target)
       ) {
         setActiveSearch(null);
+        setIsMobileSearchOpen(false);
       }
     };
     const handleKeyDown = (event) => {
@@ -91,7 +92,7 @@ const Searchbar = () => {
       document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activeSearch]);
+  }, [activeSearch, isMobileSearchOpen]);
 
   const saveSearchHistory = (entries) => {
     setSearchHistory({ key: historyStorageKey, entries });
@@ -159,7 +160,7 @@ const Searchbar = () => {
               matchingSuggestions.length > 0 || visibleHistory.length > 0
             }
             placeholder="Search products..."
-            className="min-w-1 flex-1 bg-transparent text-sm outline-none placeholder:text-stone-500"
+            className="search min-w-1 flex-1 bg-transparent text-sm outline-none placeholder:text-stone-500"
           />
           <button
             type="submit"
@@ -269,7 +270,10 @@ const Searchbar = () => {
 
   return (
     <div className="flex items-center">
-      <div ref={mobileSearchRef} className="relative lg:hidden">
+      <div
+        ref={mobileSearchRef}
+        className="mobile-search-trigger relative lg:hidden"
+      >
         <button
           type="button"
           onClick={() => {
@@ -291,7 +295,7 @@ const Searchbar = () => {
         {isMobileSearchOpen && (
           <div
             id="mobile-product-search"
-            className="absolute right-0 top-full z-[60] mt-3 w-[min(90vw,24rem)] rounded-xl border border-stone-200 bg-white p-3 shadow-xl"
+            className="mobile-search-panel absolute right-0 top-full z-[60] mt-3 w-[min(90vw,24rem)] rounded-xl border border-stone-200 bg-white p-3 shadow-xl"
           >
             {searchInput(
               "mobile",
