@@ -744,12 +744,12 @@ const ProductDetails = () => {
         maxLength={1000}
         required
         placeholder={`Reply to ${targetName}...`}
-        className="min-w-0 flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-500"
+        className="min-w-0 flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-500 max-[421px]:text-[0.8125rem]"
       />
       <button
         type="submit"
         disabled={!replyText.trim() || Boolean(pendingReviewAction)}
-        className="shrink-0 rounded-full bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black disabled:opacity-50"
+        className="shrink-0 rounded-full bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black disabled:opacity-50 max-[421px]:text-[0.6875rem]"
       >
         {pendingReviewAction === `${reviewId}:reply` ? "Sending..." : "Send"}
       </button>
@@ -783,7 +783,7 @@ const ProductDetails = () => {
             className="rounded-xl bg-gray-50 px-3 py-2"
           >
             <div className="flex flex-wrap items-center gap-x-2">
-              <span className="text-xs font-semibold text-gray-900">{reply.userName}</span>
+              <span className="text-xs font-semibold text-gray-900 max-[421px]:text-[0.8125rem]">{reply.userName}</span>
               <time
                 className="text-[11px] text-gray-500"
                 dateTime={reply.createdAt}
@@ -792,7 +792,7 @@ const ProductDetails = () => {
                 {formatReviewAge(reply.createdAt, reviewTimestampNow)}
               </time>
             </div>
-            <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">{reply.comment}</p>
+            <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700 max-[421px]:text-[0.8125rem]">{reply.comment}</p>
           </div>
           {editingReplyId === reply.id ? (
             <form
@@ -806,20 +806,20 @@ const ProductDetails = () => {
                 required
                 rows={2}
                 aria-label="Edit reply"
-                className="w-full rounded-lg border border-gray-300 p-2 text-sm"
+                className="w-full rounded-lg border border-gray-300 p-2 text-sm max-[421px]:text-[0.8125rem]"
               />
               <div className="flex gap-2">
                 <button
                   type="submit"
                   disabled={!editReplyComment.trim() || Boolean(pendingReviewAction)}
-                  className="rounded-md bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50"
+                  className="rounded-md bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50 max-[421px]:text-[0.6875rem]"
                 >
                   Save
                 </button>
                 <button
                   type="button"
                   onClick={() => setEditingReplyId(null)}
-                  className="rounded-md px-3 py-1.5 text-xs font-semibold text-gray-600"
+                  className="rounded-md px-3 py-1.5 text-xs font-semibold text-gray-600 max-[421px]:text-[0.6875rem]"
                 >
                   Cancel
                 </button>
@@ -839,7 +839,7 @@ const ProductDetails = () => {
                 setReplyText("");
                 setReviewActionError("");
               }}
-              className="mt-1 cursor-pointer px-2 text-xs font-medium text-gray-500 hover:text-gray-900"
+              className="mt-1 cursor-pointer px-2 text-xs font-medium text-gray-500 hover:text-gray-900 max-[421px]:text-[0.6875rem]"
             >
               Reply
             </button>
@@ -865,7 +865,7 @@ const ProductDetails = () => {
         <main className="flex min-h-[50vh] items-center justify-center px-5">
           <div className="text-center" role="status">
             <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-gray-900" />
-            <p className="mt-4 text-sm text-gray-500">Loading product details...</p>
+            <p className="mt-4 text-sm text-gray-500 max-[421px]:text-[0.8125rem]">Loading product details...</p>
           </div>
         </main>
         <Footer />
@@ -877,16 +877,16 @@ const ProductDetails = () => {
     return (
       <>
         <main className="flex min-h-[50vh] flex-col items-center justify-center px-5 text-center">
-          <h1 className="font-serif text-3xl font-semibold text-gray-900">
+          <h1 className="font-serif text-3xl font-semibold text-gray-900 max-[421px]:text-[clamp(1.25rem,5vw,1.5rem)]">
             {error || "Product not found."}
           </h1>
-          <p className="mt-3 max-w-md text-sm leading-6 text-gray-500">
+          <p className="mt-3 max-w-md text-sm leading-6 text-gray-500 max-[421px]:text-[0.8125rem]">
             We couldn&apos;t load this product. It may have been removed or the
             connection may have failed.
           </p>
           <Link
             to="/"
-            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-black"
+            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-black max-[421px]:text-[0.6875rem]"
           >
             <ArrowLeft size={16} />
             Back to shop
@@ -899,18 +899,18 @@ const ProductDetails = () => {
 
   return (
     <>
-      <main className="bg-[#f8f7f4] px-5 py-10 text-gray-900 sm:px-8 sm:py-14">
+      <main className="bg-[#f8f7f4] px-5 py-10 text-gray-900 sm:px-8 sm:py-14 max-[421px]:px-3 max-[421px]:py-6">
         <div className="mx-auto max-w-6xl">
           <Link
             to="/"
-            className="mb-7 inline-flex items-center gap-2 text-sm text-gray-500 transition hover:text-gray-900"
+            className="mb-7 inline-flex items-center gap-2 text-sm text-gray-500 transition hover:text-gray-900 max-[421px]:text-[0.6875rem]"
           >
             <ArrowLeft size={16} />
             Continue shopping
           </Link>
 
-          <div className="grid gap-8 rounded-2xl bg-white p-5 shadow-sm sm:p-8 lg:grid-cols-2 lg:gap-12">
-            <div className="flex min-h-72 items-center justify-center overflow-hidden rounded-xl bg-gray-100 sm:min-h-96">
+          <div className="grid gap-8 rounded-2xl bg-white p-5 shadow-sm sm:p-8 lg:grid-cols-2 lg:gap-12 max-[421px]:gap-6 max-[421px]:rounded-xl max-[421px]:p-4">
+            <div className="flex min-h-72 items-center justify-center overflow-hidden rounded-xl bg-gray-100 sm:min-h-96 max-[421px]:min-h-60">
               <img
                 src={product.mainImage}
                 alt={product.title}
@@ -918,45 +918,47 @@ const ProductDetails = () => {
               />
             </div>
 
-            <section className="flex flex-col py-1">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
+            <section className="flex min-w-0 flex-col py-1">
+              <p className="break-words text-xs font-semibold uppercase tracking-[0.2em] text-amber-700 max-[421px]:text-[0.625rem]">
                 {product.brandName || product.shopName || product.category}
               </p>
-              <h1 className="mt-3 font-serif text-3xl font-semibold tracking-tight sm:text-4xl">
+              <h1 className="mt-3 break-words font-serif text-3xl font-semibold tracking-tight sm:text-4xl max-[421px]:text-[clamp(1.25rem,5vw,1.5rem)] max-[421px]:leading-[1.1]">
                 {product.title}
               </h1>
 
-              <div className="mt-5 space-y-1 text-sm text-gray-500">
+              <div className="mt-5 space-y-1 text-sm text-gray-500 max-[421px]:text-[0.8125rem]">
                 <p>Brand: <span className="text-gray-800">{product.brandName || "—"}</span></p>
                 <p>Shop: <span className="text-gray-800">{product.shopName || "—"}</span></p>
                 <p>Category: <span className="capitalize text-gray-800">{product.category || "—"}</span></p>
               </div>
 
               <div className="mt-6 flex flex-wrap items-baseline gap-3">
-                <span className="text-base font-semibold">
+                <span className="text-base font-semibold max-[421px]:text-lg">
                   Regular Price: {formatPrice(product.price)}
                 </span>
                 {hasSalePrice && (
-                  <span className="text-base font-semibold text-gray-500">
+                  <span className="text-base font-semibold text-gray-500 max-[421px]:text-[0.8125rem]">
                     Discount Price: {formatPrice(product.discountPrice)}
                   </span>
                 )}
                 {discountPercentage !== null && (
-                  <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-700">
+                  <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 max-[421px]:text-[0.6875rem]">
                     {discountPercentage}% off
                   </span>
                 )}
               </div>
 
               <div className="mt-5">
-                <p className="text-sm font-semibold text-gray-800">Description</p>
-                <p className="mt-2 whitespace-pre-line text-sm leading-7 text-gray-600">
+                <p className="text-sm font-semibold text-gray-800 max-[421px]:text-[clamp(1rem,4.3vw,1.125rem)]">
+                  Description
+                </p>
+                <p className="mt-2 break-words whitespace-pre-line text-sm leading-7 text-gray-600 max-[421px]:text-[0.6875rem]">
                   {product.description || "No description available."}
                 </p>
               </div>
 
               <p
-                className={`mt-5 text-sm font-medium ${
+                className={`mt-5 text-sm font-medium max-[421px]:text-[0.8125rem] ${
                   availableStock > 0 ? "text-emerald-700" : "text-red-600"
                 }`}
               >
@@ -965,7 +967,7 @@ const ProductDetails = () => {
                   : "Out of stock"}
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div className="mt-6 flex flex-wrap items-center gap-3 max-[421px]:grid max-[421px]:grid-cols-[auto_minmax(0,1fr)] max-[421px]:gap-2">
                 <div className="inline-flex items-center rounded-lg border border-gray-200">
                   <button
                     type="button"
@@ -976,7 +978,7 @@ const ProductDetails = () => {
                   >
                     <Minus size={16} />
                   </button>
-                  <span className="min-w-10 text-center text-sm font-semibold">
+                  <span className="min-w-10 text-center text-sm font-semibold max-[421px]:text-[0.6875rem]">
                     {quantity}
                   </span>
                   <button
@@ -995,7 +997,7 @@ const ProductDetails = () => {
                 <button
                   type="button"
                   onClick={addToCart}
-                  className="inline-flex min-w-48 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-gray-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-black sm:flex-none"
+                  className="inline-flex min-w-48 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-gray-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-black sm:flex-none max-[421px]:min-w-0 max-[421px]:px-2 max-[421px]:text-[0.6875rem]"
                 >
                   <ShoppingBag size={17} />
                   Add to Cart
@@ -1005,7 +1007,7 @@ const ProductDetails = () => {
                   type="button"
                   onClick={toggleWishlist}
                   aria-pressed={isWishlisted}
-                  className={`inline-flex items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition ${
+                  className={`col-span-2 inline-flex items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition max-[421px]:w-full max-[421px]:text-[0.6875rem] ${
                     isWishlisted
                       ? "border-red-200 bg-red-50 text-red-600"
                       : "border-gray-200 text-gray-700 hover:border-gray-400"
@@ -1017,7 +1019,7 @@ const ProductDetails = () => {
               </div>
 
               {feedback && (
-                <p className="mt-4 text-sm text-gray-600" role="status">
+                <p className="mt-4 text-sm text-gray-600 max-[421px]:text-[0.8125rem]" role="status">
                   {feedback}
                 </p>
               )}
@@ -1030,16 +1032,16 @@ const ProductDetails = () => {
           >
             <div className="flex flex-wrap items-end justify-between gap-3 border-b border-gray-200 pb-5">
               <div>
-                <h2 id="product-reviews-heading" className="font-serif text-2xl font-semibold text-gray-900">
+                <h2 id="product-reviews-heading" className="font-serif text-2xl font-semibold text-gray-900 max-[421px]:text-[clamp(1rem,4.3vw,1.125rem)]">
                   Product reviews
                 </h2>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-500 max-[421px]:text-[0.8125rem]">
                   Feedback from customers who received this product
                 </p>
               </div>
               {reviews.length > 0 && (
                 <div className="rounded-xl bg-gray-50 px-3 py-2">
-                  <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-800">
+                  <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-800 max-[421px]:text-[0.8125rem]">
                     <Star size={16} className="fill-amber-400 text-amber-400" />
                     {averageRating.toFixed(1)}
                     <span className="font-normal text-gray-500">
@@ -1050,13 +1052,13 @@ const ProductDetails = () => {
               )}
             </div>
             {reviewsError ? (
-              <p role="alert" className="pt-5 text-sm text-red-700">{reviewsError}</p>
+              <p role="alert" className="pt-5 text-sm text-red-700 max-[421px]:text-[0.8125rem]">{reviewsError}</p>
             ) : reviews.length === 0 ? (
-              <p className="pt-5 text-sm text-gray-500">No reviews yet. Be the first to share your experience.</p>
+              <p className="pt-5 text-sm text-gray-500 max-[421px]:text-[0.8125rem]">No reviews yet. Be the first to share your experience.</p>
             ) : (
               <div className="space-y-5 pt-5">
                 {reviewActionError && (
-                  <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                  <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 max-[421px]:text-[0.8125rem]">
                     {reviewActionError}
                   </p>
                 )}
@@ -1088,7 +1090,7 @@ const ProductDetails = () => {
                     >
                       <div
                         aria-hidden="true"
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-200 text-xs font-bold text-gray-700"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-200 text-xs font-bold text-gray-700 max-[421px]:text-[0.625rem]"
                       >
                         {getReviewInitials(review.userName)}
                       </div>
@@ -1099,7 +1101,7 @@ const ProductDetails = () => {
                             className="max-w-2xl space-y-3 rounded-xl border border-gray-200 bg-gray-50 p-4"
                           >
                             <fieldset>
-                              <legend className="text-sm font-semibold text-gray-800">
+                              <legend className="text-sm font-semibold text-gray-800 max-[421px]:text-[0.8125rem]">
                                 Update your rating
                               </legend>
                               <div className="mt-2 flex gap-1">
@@ -1127,7 +1129,7 @@ const ProductDetails = () => {
                                 })}
                               </div>
                             </fieldset>
-                            <label className="block text-sm font-semibold text-gray-800">
+                            <label className="block text-sm font-semibold text-gray-800 max-[421px]:text-[0.8125rem]">
                               Comment
                               <textarea
                                 value={editReviewComment}
@@ -1135,21 +1137,21 @@ const ProductDetails = () => {
                                 maxLength={2000}
                                 required
                                 rows={4}
-                                className="mt-1 w-full rounded-lg border border-gray-300 bg-white p-3 text-sm font-normal"
+                                className="mt-1 w-full rounded-lg border border-gray-300 bg-white p-3 text-sm font-normal max-[421px]:text-[0.8125rem]"
                               />
                             </label>
                             <div className="flex gap-2">
                               <button
                                 type="submit"
                                 disabled={!editReviewComment.trim() || Boolean(pendingReviewAction)}
-                                className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+                                className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50 max-[421px]:text-[0.6875rem]"
                               >
                                 {pendingReviewAction === `${review.id}:edit` ? "Saving..." : "Save changes"}
                               </button>
                               <button
                                 type="button"
                                 onClick={() => setEditingReviewId(null)}
-                                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700"
+                                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 max-[421px]:text-[0.6875rem]"
                               >
                                 Cancel
                               </button>
@@ -1158,14 +1160,14 @@ const ProductDetails = () => {
                         ) : (
                         <div className="inline-block max-w-full rounded-2xl bg-gray-100 px-4 py-3">
                           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                            <p className="text-sm font-semibold text-gray-900">
+                            <p className="text-sm font-semibold text-gray-900 max-[421px]:text-[0.9375rem]">
                               {review.userName}
                             </p>
                             {age && (
                               <>
                                 <span aria-hidden="true" className="text-xs text-gray-400">·</span>
                                 <time
-                                  className="text-xs text-gray-500"
+                                  className="text-xs text-gray-500 max-[421px]:text-[0.6875rem]"
                                   dateTime={review.createdAt}
                                   title={new Date(review.createdAt).toLocaleString()}
                                 >
@@ -1185,11 +1187,11 @@ const ProductDetails = () => {
                                 className={index < review.rating ? "fill-amber-400 text-amber-500" : "text-gray-300"}
                               />
                             ))}
-                            <span className="ml-1 text-xs font-medium text-gray-600">
+                            <span className="ml-1 text-xs font-medium text-gray-600 max-[421px]:text-[0.6875rem]">
                               {review.rating}.0
                             </span>
                           </div>
-                          <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-gray-800">
+                          <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-gray-800 max-[421px]:text-[0.8125rem]">
                             {review.comment}
                           </p>
                         </div>
@@ -1213,7 +1215,7 @@ const ProductDetails = () => {
                             ))}
                           </div>
                         )}
-                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 px-2 text-xs font-medium text-gray-500">
+                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 px-2 text-xs font-medium text-gray-500 max-[421px]:text-[0.6875rem]">
                           {user ? (
                             <>
                               <button
@@ -1266,7 +1268,7 @@ const ProductDetails = () => {
                             <Link
                               to="/login"
                               state={{ from: { pathname: productPath } }}
-                              className="hover:text-blue-700"
+                              className="text-sm hover:text-blue-700 max-[421px]:text-[0.875rem]"
                             >
                               Sign in to like, dislike, or reply
                             </Link>
@@ -1317,7 +1319,7 @@ const ProductDetails = () => {
                     }
                     setContextMenu(null);
                   }}
-                  className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-100"
+                  className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-100 max-[421px]:text-[0.6875rem]"
                 >
                   <Pencil size={14} /> Edit
                 </button>
@@ -1334,7 +1336,7 @@ const ProductDetails = () => {
                     }
                     else handleReplyDelete(reviewId, replyId);
                   }}
-                  className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-red-700 hover:bg-red-50 disabled:opacity-50"
+                  className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-red-700 hover:bg-red-50 disabled:opacity-50 max-[421px]:text-[0.6875rem]"
                 >
                   <Trash2 size={14} /> Delete
                 </button>
@@ -1359,14 +1361,14 @@ const ProductDetails = () => {
             aria-describedby="delete-review-description"
             className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
           >
-            <h2 id="delete-review-title" className="text-lg font-semibold text-gray-900">
+            <h2 id="delete-review-title" className="text-lg font-semibold text-gray-900 max-[421px]:text-[clamp(1rem,4.3vw,1.125rem)]">
               Delete this review?
             </h2>
-            <p id="delete-review-description" className="mt-2 text-sm leading-6 text-gray-600">
+            <p id="delete-review-description" className="mt-2 text-sm leading-6 text-gray-600 max-[421px]:text-[0.8125rem]">
               This will permanently delete your review and all replies to it. This action cannot be undone.
             </p>
             {reviewActionError && (
-              <p role="alert" className="mt-3 text-sm text-red-700">
+              <p role="alert"               className="mt-3 text-sm text-red-700 max-[421px]:text-[0.8125rem]">
                 {reviewActionError}
               </p>
             )}
@@ -1375,7 +1377,7 @@ const ProductDetails = () => {
                 type="button"
                 disabled={Boolean(pendingReviewAction)}
                 onClick={() => setReviewDeleteConfirmation(null)}
-                className="cursor-pointer rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="cursor-pointer rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 max-[421px]:text-[0.6875rem]"
               >
                 Cancel
               </button>
@@ -1383,7 +1385,7 @@ const ProductDetails = () => {
                 type="button"
                 disabled={Boolean(pendingReviewAction)}
                 onClick={() => handleReviewDelete(reviewDeleteConfirmation.reviewId)}
-                className="cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50 max-[421px]:text-[0.6875rem]"
               >
                 {pendingReviewAction === `${reviewDeleteConfirmation.reviewId}:delete`
                   ? "Deleting..."
@@ -1418,16 +1420,16 @@ const ProductDetails = () => {
             <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 text-amber-700">
               <AlertCircle size={25} />
             </span>
-            <h2 id="out-of-stock-title" className="mt-4 text-lg font-semibold text-gray-900">
+            <h2 id="out-of-stock-title" className="mt-4 text-lg font-semibold text-gray-900 max-[421px]:text-[clamp(1rem,4.3vw,1.125rem)]">
               Out of stock
             </h2>
-            <p id="out-of-stock-description" className="mt-2 text-sm leading-6 text-gray-600">
+            <p id="out-of-stock-description" className="mt-2 text-sm leading-6 text-gray-600 max-[421px]:text-[0.8125rem]">
               This product is currently unavailable because it is out of stock.
             </p>
             <button
               type="button"
               onClick={() => setOutOfStockPopupOpen(false)}
-              className="mt-5 w-full cursor-pointer rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-black"
+              className="mt-5 w-full cursor-pointer rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-black max-[421px]:text-[0.6875rem]"
             >
               Got it
             </button>

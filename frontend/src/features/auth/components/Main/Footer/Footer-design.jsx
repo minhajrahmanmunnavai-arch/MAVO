@@ -8,19 +8,19 @@ import Account from './Account'
 
 const FooterDesign = () => {
     return (
-        <section className='px-37 pb-8  '>
-            <div className='pt-15 pb-8 flex justify-between'>
+        <section className='w-full min-w-0 px-4 pb-8 sm:px-8 xl:px-37'>
+            <div className='grid grid-cols-2 gap-6 pt-12 pb-8 md:grid-cols-3 xl:flex xl:justify-between xl:gap-8 xl:pt-15'>
                 <Lumina />
                 <AboutUs />
                 <Navigation />
                 <CustomerCare />
                 <Account />
             </div>
-            <div className='flex justify-between text-gray-400'>
+            <div className='flex flex-col gap-4 text-gray-400 md:flex-row md:items-center md:justify-between'>
                 <p className='text-[14px] text-gray-300'>
                     &copy; 2026 Minhaj Rahman Inc. All rights reserved.
                 </p>
-                <div className='flex  justify-between gap-7'>
+                <div className='flex flex-wrap gap-x-5 gap-y-2'>
                     <Link className='hover:text-gray-200' to='/privacy'>Privacy Policy</Link>
                     <Link className='hover:text-gray-200' to='/terms'>Terms of Service</Link>
                     <Link className='hover:text-gray-200' to=''>Shipping & Returns</Link>
