@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const authController = require("../src/controller/authController");
 const authMiddleware = require("../src/middlewares/auth.middleware");
 const authSessionModel = require("../src/models/authSession.model");
@@ -149,6 +150,72 @@ test("login accepts an 8-character password and checks credentials", async (t) =
 
     assert.equal(statusCode, 400);
     assert.equal(responseBody.message, "Invalid credentials");
+});
+
+test("production login cookies default to secure cross-site host-only cookies", async (t) => {
+    const previousNodeEnv = process.env.NODE_ENV;
+    const previousSameSite = process.env.COOKIE_SAME_SITE;
+    const previousSecret = process.env.JWT_SECRET;
+    process.env.NODE_ENV = "production";
+    delete process.env.COOKIE_SAME_SITE;
+    process.env.JWT_SECRET = "test-secret-key-with-at-least-32-bytes";
+    t.after(() => {
+        if (previousNodeEnv === undefined) delete process.env.NODE_ENV;
+        else process.env.NODE_ENV = previousNodeEnv;
+        if (previousSameSite === undefined) delete process.env.COOKIE_SAME_SITE;
+        else process.env.COOKIE_SAME_SITE = previousSameSite;
+        if (previousSecret === undefined) delete process.env.JWT_SECRET;
+        else process.env.JWT_SECRET = previousSecret;
+    });
+
+    t.mock.method(userModel, "findOne", async () => ({
+        _id: "507f1f77bcf86cd799439011",
+        username: "Test User",
+        email: "test@example.com",
+        role: "user",
+        password: "stored-password-hash",
+    }));
+    t.mock.method(bcrypt, "compare", async () => true);
+    t.mock.method(authSessionModel, "create", async () => ({
+        _id: "507f1f77bcf86cd799439012",
+    }));
+
+    const cookies = [];
+    let statusCode;
+    const res = {
+        cookie(name, value, options) {
+            cookies.push({ name, options });
+            return this;
+        },
+        status(code) {
+            statusCode = code;
+            return this;
+        },
+        json() {
+            return this;
+        },
+    };
+
+    await authController.loginUserController(
+        {
+            body: {
+                email: "test@example.com",
+                password: "Abc123!x",
+            },
+        },
+        res
+    );
+
+    assert.equal(statusCode, 200);
+    assert.equal(cookies.length, 2);
+    for (const { options } of cookies) {
+        assert.equal(options.httpOnly, true);
+        assert.equal(options.secure, true);
+        assert.equal(options.sameSite, "none");
+        assert.equal(options.path, "/");
+        assert.equal(Object.hasOwn(options, "domain"), false);
+        assert.ok(options.maxAge > 0);
+    }
 });
 
 test("refreshing a session renews the persistent refresh-token lifetime", async (t) => {

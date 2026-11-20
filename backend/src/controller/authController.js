@@ -26,7 +26,8 @@ function emailPattern(email) {
 }
 
 function getCookieOptions(maxAge) {
-    const sameSite = (process.env.COOKIE_SAME_SITE || "strict").toLowerCase();
+    const defaultSameSite = process.env.NODE_ENV === "production" ? "none" : "strict";
+    const sameSite = (process.env.COOKIE_SAME_SITE || defaultSameSite).toLowerCase();
     if (!["strict", "lax", "none"].includes(sameSite)) {
         throw new Error("COOKIE_SAME_SITE must be strict, lax, or none.");
     }

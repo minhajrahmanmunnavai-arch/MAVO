@@ -30,7 +30,7 @@ function validateEnvironment() {
             throw new Error("Production deployment requires HTTPS_ENABLED=true behind HTTPS.");
         }
 
-        const sameSite = (process.env.COOKIE_SAME_SITE || "strict").toLowerCase();
+        const sameSite = (process.env.COOKIE_SAME_SITE || "none").toLowerCase();
         if (!["strict", "lax", "none"].includes(sameSite)) {
             throw new Error("COOKIE_SAME_SITE must be strict, lax, or none.");
         }
