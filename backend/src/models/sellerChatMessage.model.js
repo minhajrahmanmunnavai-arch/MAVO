@@ -1,0 +1,45 @@
+const mongoose = require("mongoose");
+
+const sellerChatMessageSchema = new mongoose.Schema(
+    {
+        conversation: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "SellerChatConversation",
+            required: true,
+        },
+        sender: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
+        senderRole: {
+            type: String,
+            enum: ["user", "admin"],
+            required: true,
+        },
+        senderName: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        body: {
+            type: String,
+            required: true,
+            trim: true,
+            maxlength: 2000,
+        },
+        editedAt: {
+            type: Date,
+            default: null,
+        },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    { timestamps: true }
+);
+
+sellerChatMessageSchema.index({ conversation: 1, createdAt: 1 });
+
+module.exports = mongoose.model("SellerChatMessage", sellerChatMessageSchema);

@@ -1,0 +1,104 @@
+@import 'tailwindcss';
+
+@keyframes home-section-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes home-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes home-hero-drift {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.045);
+  }
+}
+
+.home-page > section {
+  animation: home-section-enter 700ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.home-page > section:nth-child(2) {
+  animation-delay: 100ms;
+}
+
+.home-page > section:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.home-page > section:nth-child(4) {
+  animation-delay: 260ms;
+}
+
+.home-hero-image {
+  animation: home-hero-drift 24s ease-in-out infinite;
+  will-change: transform;
+}
+
+.home-hero .text-amber-600,
+.home-hero h1,
+.home-hero h1 + p,
+.home-hero h1 + p + div {
+  animation: home-content-enter 700ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.home-hero .text-amber-600 {
+  animation-delay: 180ms;
+}
+
+.home-hero h1 {
+  animation-delay: 320ms;
+}
+
+.home-hero h1 + p {
+  animation-delay: 460ms;
+}
+
+.home-hero h1 + p + div {
+  animation-delay: 600ms;
+}
+
+.home-hero button {
+  transition:
+    transform 200ms ease,
+    background-color 300ms ease,
+    color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.home-hero button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 20%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page > section,
+  .home-hero-image,
+  .home-hero .text-amber-600,
+  .home-hero h1,
+  .home-hero h1 + p,
+  .home-hero h1 + p + div {
+    animation: none;
+  }
+
+  .home-hero button {
+    transition: none;
+  }
+}
