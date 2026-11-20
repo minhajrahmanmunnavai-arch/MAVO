@@ -61,7 +61,7 @@ export default function ChatMessage({
   return (
     <div className={`flex items-start gap-2 ${isMine ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[88%] rounded-2xl px-4 py-3 sm:max-w-[75%] ${
+        className={`min-w-0 max-w-[88%] rounded-2xl px-4 py-3 sm:max-w-[75%] ${
           isDeleted
             ? "border border-gray-200 bg-gray-100 text-gray-500"
             : isMine
@@ -81,7 +81,7 @@ export default function ChatMessage({
               maxLength={2000}
               rows={3}
               autoFocus
-              className="mt-2 w-full min-w-48 resize-y rounded-lg border border-white/40 bg-white p-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-gray-400"
+              className="mt-2 w-full min-w-0 resize-y rounded-lg border border-white/40 bg-white p-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-gray-400"
             />
             <div className="mt-2 flex justify-end gap-2">
               <button
@@ -108,7 +108,7 @@ export default function ChatMessage({
             </div>
           </form>
         ) : (
-          <p className={`mt-1 whitespace-pre-wrap wrap-break-wordbreak-word text-sm leading-6 ${isDeleted ? "italic" : ""}`}>
+          <p className={`mt-1 whitespace-pre-wrap break-words text-sm leading-6 ${isDeleted ? "italic" : ""}`}>
             {isDeleted ? "This message was deleted." : message.body}
           </p>
         )}

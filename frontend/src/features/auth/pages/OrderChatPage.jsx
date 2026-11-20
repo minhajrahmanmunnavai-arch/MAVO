@@ -177,10 +177,10 @@ function OrderChatConversation({ orderId }) {
   };
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-7rem)] w-full max-w-5xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+    <div className="mx-auto flex min-h-[calc(100vh-7rem)] w-full max-w-5xl flex-col px-4 py-6 sm:px-6 lg:px-8 max-[421px]:px-3 max-[421px]:py-4">
       <Link
         to="/my-orders"
-        className="mb-5 inline-flex w-fit items-center gap-2 text-sm font-semibold text-stone-600 transition hover:text-stone-950"
+        className="mb-5 inline-flex w-fit items-center gap-2 text-sm font-semibold text-stone-600 transition hover:text-stone-950 max-[421px]:mb-3"
       >
         <ArrowLeft aria-hidden="true" className="h-4 w-4" />
         Back to My Orders
@@ -206,7 +206,7 @@ function OrderChatConversation({ orderId }) {
         </header>
 
         <div
-          className="flex-1 space-y-4 overflow-y-auto bg-[#f7f7f5] px-4 py-6 sm:px-8"
+          className="min-w-0 flex-1 space-y-4 overflow-y-auto bg-[#f7f7f5] px-4 py-6 sm:px-8 max-[421px]:px-3 max-[421px]:py-4"
           aria-live="polite"
           aria-busy={isLoading}
         >
@@ -270,7 +270,7 @@ function OrderChatConversation({ orderId }) {
             maxLength={2000}
             rows={1}
             placeholder="Write a message..."
-            className="max-h-36 min-h-12 flex-1 resize-y rounded-xl border border-stone-200 px-4 py-3 text-sm text-stone-900 outline-none transition focus:border-stone-500"
+            className="max-h-36 min-h-12 min-w-0 flex-1 resize-y rounded-xl border border-stone-200 px-4 py-3 text-sm text-stone-900 outline-none transition focus:border-stone-500"
           />
           <button
             type="submit"
