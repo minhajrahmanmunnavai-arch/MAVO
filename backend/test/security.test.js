@@ -55,6 +55,13 @@ test("CSRF protection allows cross-site mutations from an allowed origin", () =>
         }).passed,
         true
     );
+    assert.equal(
+        runCsrfMiddleware({
+            origin: "http://127.0.0.1:5173",
+            fetchSite: "cross-site",
+        }).passed,
+        true
+    );
 });
 
 test("CSRF protection allows same-origin mutations and safe methods", () => {

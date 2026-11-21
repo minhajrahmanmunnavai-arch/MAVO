@@ -30,6 +30,7 @@ import {
   voteOnProductReview,
 } from "../services/review.api.js";
 import { useAuth } from "../Hooks/useAuth.js";
+import "./ProductDetails.responsive.css";
 
 const formatPrice = (value) => {
   const number = Number(value);
@@ -899,7 +900,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      <main className="bg-[#f8f7f4] px-5 py-10 text-gray-900 sm:px-8 sm:py-14 max-[421px]:px-3 max-[421px]:py-6">
+      <main className="product-details-page bg-[#f8f7f4] px-5 py-10 text-gray-900 sm:px-8 sm:py-14 max-[421px]:px-3 max-[421px]:py-6">
         <div className="mx-auto max-w-6xl">
           <Link
             to="/"
@@ -909,8 +910,8 @@ const ProductDetails = () => {
             Continue shopping
           </Link>
 
-          <div className="grid gap-8 rounded-2xl bg-white p-5 shadow-sm sm:p-8 lg:grid-cols-2 lg:gap-12 max-[421px]:gap-6 max-[421px]:rounded-xl max-[421px]:p-4">
-            <div className="flex min-h-72 items-center justify-center overflow-hidden rounded-xl bg-gray-100 sm:min-h-96 max-[421px]:min-h-60">
+          <div className="product-overview-card grid gap-8 rounded-2xl bg-white p-5 shadow-sm sm:p-8 lg:grid-cols-2 lg:gap-12 max-[421px]:gap-6 max-[421px]:rounded-xl max-[421px]:p-4">
+            <div className="product-image-frame flex min-h-72 items-center justify-center overflow-hidden rounded-xl bg-gray-100 sm:min-h-96 max-[421px]:min-h-60">
               <img
                 src={product.mainImage}
                 alt={product.title}
@@ -918,21 +919,21 @@ const ProductDetails = () => {
               />
             </div>
 
-            <section className="flex min-w-0 flex-col py-1">
+            <section className="product-info-panel flex min-w-0 flex-col py-1">
               <p className="break-words text-xs font-semibold uppercase tracking-[0.2em] text-amber-700 max-[421px]:text-[0.625rem]">
                 {product.brandName || product.shopName || product.category}
               </p>
-              <h1 className="mt-3 break-words font-serif text-3xl font-semibold tracking-tight sm:text-4xl max-[421px]:text-[clamp(1.25rem,5vw,1.5rem)] max-[421px]:leading-[1.1]">
+              <h1 className="product-title mt-3 break-words font-serif text-3xl font-semibold tracking-tight sm:text-4xl max-[421px]:text-[clamp(1.25rem,5vw,1.5rem)] max-[421px]:leading-[1.1]">
                 {product.title}
               </h1>
 
-              <div className="mt-5 space-y-1 text-sm text-gray-500 max-[421px]:text-[0.8125rem]">
+              <div className="product-metadata mt-5 space-y-1 text-sm text-gray-500 max-[421px]:text-[0.8125rem]">
                 <p>Brand: <span className="text-gray-800">{product.brandName || "—"}</span></p>
                 <p>Shop: <span className="text-gray-800">{product.shopName || "—"}</span></p>
                 <p>Category: <span className="capitalize text-gray-800">{product.category || "—"}</span></p>
               </div>
 
-              <div className="mt-6 flex flex-wrap items-baseline gap-3">
+              <div className="product-prices mt-6 flex flex-wrap items-baseline gap-3">
                 <span className="text-base font-semibold max-[421px]:text-lg">
                   Regular Price: {formatPrice(product.price)}
                 </span>
@@ -948,7 +949,7 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              <div className="mt-5">
+              <div className="product-description mt-5">
                 <p className="text-sm font-semibold text-gray-800 max-[421px]:text-[clamp(1rem,4.3vw,1.125rem)]">
                   Description
                 </p>
@@ -958,7 +959,7 @@ const ProductDetails = () => {
               </div>
 
               <p
-                className={`mt-5 text-sm font-medium max-[421px]:text-[0.8125rem] ${
+                className={`product-stock mt-5 text-sm font-medium max-[421px]:text-[0.8125rem] ${
                   availableStock > 0 ? "text-emerald-700" : "text-red-600"
                 }`}
               >
@@ -967,7 +968,7 @@ const ProductDetails = () => {
                   : "Out of stock"}
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3 max-[421px]:grid max-[421px]:grid-cols-[auto_minmax(0,1fr)] max-[421px]:gap-2">
+              <div className="product-actions mt-6 flex flex-wrap items-center gap-3 max-[421px]:grid max-[421px]:grid-cols-[auto_minmax(0,1fr)] max-[421px]:gap-2">
                 <div className="inline-flex items-center rounded-lg border border-gray-200">
                   <button
                     type="button"
@@ -1003,19 +1004,21 @@ const ProductDetails = () => {
                   Add to Cart
                 </button>
 
-                <button
-                  type="button"
-                  onClick={toggleWishlist}
-                  aria-pressed={isWishlisted}
-                  className={`col-span-2 inline-flex items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition max-[421px]:w-full max-[421px]:text-[0.6875rem] ${
-                    isWishlisted
-                      ? "border-red-200 bg-red-50 text-red-600"
-                      : "border-gray-200 text-gray-700 hover:border-gray-400"
-                  }`}
-                >
-                  <Heart size={17} className={isWishlisted ? "fill-current" : ""} />
-                  {isWishlisted ? "Saved" : "Wishlist"}
-                </button>
+                <div className="product-wishlist-row col-span-2 flex w-full justify-center">
+                  <button
+                    type="button"
+                    onClick={toggleWishlist}
+                    aria-pressed={isWishlisted}
+                    className={`inline-flex items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition max-[421px]:w-full max-[421px]:text-[0.6875rem] ${
+                      isWishlisted
+                        ? "border-red-200 bg-red-50 text-red-600"
+                        : "border-gray-200 text-gray-700 hover:border-gray-400"
+                    }`}
+                  >
+                    <Heart size={17} className={isWishlisted ? "fill-current" : ""} />
+                    {isWishlisted ? "Saved" : "Wishlist"}
+                  </button>
+                </div>
               </div>
 
               {feedback && (
@@ -1028,7 +1031,7 @@ const ProductDetails = () => {
           <section
             id="reviews"
             aria-labelledby="product-reviews-heading"
-            className="mt-10 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8"
+            className="product-reviews mt-10 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8"
           >
             <div className="flex flex-wrap items-end justify-between gap-3 border-b border-gray-200 pb-5">
               <div>

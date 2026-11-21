@@ -131,33 +131,33 @@ export default function MyOrdersPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f7f6f2] px-4 py-8 text-gray-900 sm:px-8 sm:py-12 max-[421px]:px-3 max-[421px]:py-6">
+    <main className="min-h-screen bg-[#f7f6f2] px-4 py-8 text-gray-900 sm:px-8 sm:py-12 max-[520px]:px-3 max-[520px]:py-6">
       <div className="mx-auto max-w-6xl">
-        <header className="relative mb-8 overflow-hidden rounded-3xl bg-white px-6 py-8 text-white shadow-sm sm:px-10 sm:py-10 max-[421px]:mb-6 max-[421px]:rounded-2xl max-[421px]:px-4 max-[421px]:py-6">
+        <header className="relative mb-8 overflow-hidden rounded-3xl bg-white px-6 py-8 text-white shadow-sm sm:px-10 sm:py-10 max-[520px]:mb-6 max-[520px]:rounded-2xl max-[520px]:px-4 max-[520px]:py-6">
           <div className="pointer-events-none absolute -right-12 -top-20 h-64 w-64 rounded-full border border-white/10" />
           <div className="pointer-events-none absolute -right-2 -top-10 h-44 w-44 rounded-full border border-white/10" />
-          <div className="relative flex flex-col justify-between gap-8 sm:flex-row sm:items-end max-[421px]:gap-4">
+          <div className="relative flex flex-col justify-between gap-8 sm:flex-row sm:items-end max-[520px]:gap-4">
             <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-500 max-[421px]:text-[0.625rem]">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-500 max-[520px]:text-[0.625rem]">
                 Your account
               </p>
-              <h1 className="mt-3 text-3xl text-gray-900 font-semibold tracking-tight sm:text-4xl max-[421px]:mt-2 max-[421px]:text-[clamp(1.25rem,5vw,1.5rem)]">
+              <h1 className="mt-3 text-3xl text-gray-900 font-semibold tracking-tight sm:text-4xl max-[520px]:mt-2 max-[520px]:text-[clamp(1.25rem,5vw,1.5rem)]">
                 My orders
               </h1>
-              <p className="mt-3 max-w-lg text-sm leading-6 text-gray-600 sm:text-base max-[421px]:mt-2 max-[421px]:text-[0.8125rem] max-[421px]:leading-5">
+              <p className="mt-3 max-w-lg text-sm leading-6 text-gray-600 sm:text-base max-[520px]:mt-2 max-[520px]:text-[0.8125rem] max-[520px]:leading-5">
                 All your purchases, together in one place. Keep an eye on what's
                 on its way.
               </p>
             </div>
-            <div className="flex w-fit max-w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 max-[421px]:gap-2 max-[421px]:px-3 max-[421px]:py-2">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-200/10 text-emerald-500 max-[421px]:h-9 max-[421px]:w-9">
+            <div className="flex w-fit max-w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 max-[520px]:gap-2 max-[520px]:px-3 max-[520px]:py-2">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-200/10 text-emerald-500 max-[520px]:h-9 max-[520px]:w-9">
                 <PackageCheck aria-hidden="true" className="h-5 w-5" />
               </span>
               <span>
-                <span className="block text-2xl text-gray-800 font-semibold leading-none max-[421px]:text-lg">
+                <span className="block text-2xl text-gray-800 font-semibold leading-none max-[520px]:text-lg">
                   {orders.length}
                 </span>
-                <span className="mt-1 block text-xs text-gray-900 max-[421px]:text-[0.6875rem]">
+                <span className="mt-1 block text-xs text-gray-900 max-[520px]:text-[0.6875rem]">
                   {orders.length === 1 ? "order placed" : "orders placed"}
                 </span>
               </span>
@@ -167,7 +167,7 @@ export default function MyOrdersPage() {
 
         {cancelNotice && (
           <p
-            className={`mb-5 rounded-2xl border p-4 text-sm shadow-sm max-[421px]:p-3 max-[421px]:text-[0.8125rem] ${
+            className={`mb-5 rounded-2xl border p-4 text-sm shadow-sm max-[520px]:p-3 max-[520px]:text-[0.8125rem] ${
               cancelEmailFailed
                 ? "border-amber-200 bg-amber-50 text-amber-800"
                 : "border-green-200 bg-green-50 text-green-800"
@@ -179,37 +179,37 @@ export default function MyOrdersPage() {
         )}
 
         {isLoading ? (
-          <div className="rounded-2xl border border-gray-200/80 bg-white p-10 text-center shadow-sm max-[421px]:p-6">
+          <div className="rounded-2xl border border-gray-200/80 bg-white p-10 text-center shadow-sm max-[520px]:p-6">
             <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 text-gray-500">
               <ShoppingBag aria-hidden="true" className="h-5 w-5" />
             </span>
-            <p className="mt-4 text-sm font-medium text-gray-700 max-[421px]:text-[0.8125rem]">
+            <p className="mt-4 text-sm font-medium text-gray-700 max-[520px]:text-[0.8125rem]">
               Loading your orders...
             </p>
-            <p className="mt-1 text-xs text-gray-500 max-[421px]:text-[0.6875rem]">Just a moment</p>
+            <p className="mt-1 text-xs text-gray-500 max-[520px]:text-[0.6875rem]">Just a moment</p>
           </div>
         ) : loadError ? (
-          <p className="rounded-2xl border border-red-200 bg-white p-6 text-sm text-red-600 shadow-sm max-[421px]:p-4 max-[421px]:text-[0.8125rem]" role="alert">
+          <p className="rounded-2xl border border-red-200 bg-white p-6 text-sm text-red-600 shadow-sm max-[520px]:p-4 max-[520px]:text-[0.8125rem]" role="alert">
             {loadError}
           </p>
         ) : orders.length === 0 ? (
-          <div className="rounded-3xl border border-gray-200/80 bg-white px-6 py-14 text-center shadow-sm sm:px-10 max-[421px]:rounded-2xl max-[421px]:px-4 max-[421px]:py-10">
+          <div className="rounded-3xl border border-gray-200/80 bg-white px-6 py-14 text-center shadow-sm sm:px-10 max-[520px]:rounded-2xl max-[520px]:px-4 max-[520px]:py-10">
             <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f1f3ed] text-[#506b55]">
               <ShoppingBag aria-hidden="true" className="h-7 w-7" />
             </span>
-            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-gray-400 max-[421px]:text-[0.625rem]">
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-gray-400 max-[520px]:text-[0.625rem]">
               A little room for something lovely
             </p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-gray-900 max-[421px]:text-[clamp(1rem,4.3vw,1.125rem)]">
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-gray-900 max-[520px]:text-[clamp(1rem,4.3vw,1.125rem)]">
               No orders just yet
             </h2>
-            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-gray-500 max-[421px]:text-[0.8125rem]">
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-gray-500 max-[520px]:text-[0.8125rem]">
               Once you find something you love, your order details and delivery
               updates will appear here.
             </p>
             <Link
               to="/category"
-              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#26372c] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#354a3c] max-[421px]:text-[0.6875rem]"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#26372c] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#354a3c] max-[520px]:text-[0.6875rem]"
             >
               Explore the collection
               <ArrowRight aria-hidden="true" className="h-4 w-4" />
@@ -236,17 +236,17 @@ export default function MyOrdersPage() {
                   key={order._id}
                   className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-[0_8px_30px_-24px_rgba(27,39,31,0.5)] transition-shadow hover:shadow-[0_14px_38px_-24px_rgba(27,39,31,0.45)]"
                 >
-                  <div                   className="flex flex-wrap items-center justify-between gap-4 border-b border-gray-100 bg-[#fbfbf9] px-5 py-4 sm:px-7 max-[421px]:gap-3 max-[421px]:px-3 max-[421px]:py-3">
+                  <div                   className="flex flex-wrap items-center justify-between gap-4 border-b border-gray-100 bg-[#fbfbf9] px-5 py-4 sm:px-7 max-[520px]:gap-3 max-[520px]:px-3 max-[520px]:py-3">
                     <div className="flex min-w-0 flex-wrap items-center gap-x-7 gap-y-3">
-                      <div className="flex items-center gap-3 max-[421px]:gap-2">
-                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#617762] shadow-sm ring-1 ring-gray-100 max-[421px]:h-8 max-[421px]:w-8">
+                      <div className="flex items-center gap-3 max-[520px]:gap-2">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#617762] shadow-sm ring-1 ring-gray-100 max-[520px]:h-8 max-[520px]:w-8">
                           <CalendarDays aria-hidden="true" className="h-4 w-4" />
                         </span>
                         <span>
                           <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-gray-400">
                             Order placed
                           </span>
-                          <span className="mt-1 block text-sm font-semibold text-gray-800 max-[421px]:text-[0.8125rem]">
+                          <span className="mt-1 block text-sm font-semibold text-gray-800 max-[520px]:text-[0.8125rem]">
                             {formatDate(order.createdAt)}
                           </span>
                         </span>
@@ -255,13 +255,13 @@ export default function MyOrdersPage() {
                         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-gray-400">
                           Order number
                         </p>
-                        <p className="mt-1 max-w-55 truncate text-sm font-medium text-gray-700 max-[421px]:text-[0.6875rem]">
+                        <p className="mt-1 max-w-55 truncate text-sm font-medium text-gray-700 max-[520px]:text-[0.6875rem]">
                           #{order._id}
                         </p>
                       </div>
                     </div>
                     <span
-                      className={`rounded-full px-3.5 py-1.5 text-xs font-semibold max-[421px]:px-3 max-[421px]:py-1 max-[421px]:text-[0.6875rem] ${
+                      className={`rounded-full px-3.5 py-1.5 text-xs font-semibold max-[520px]:px-3 max-[520px]:py-1 max-[520px]:text-[0.6875rem] ${
                         statusStyles[status] || "bg-gray-100 text-gray-700"
                       }`}
                     >
@@ -280,31 +280,31 @@ export default function MyOrdersPage() {
                       return (
                         <div
                           key={item._id || `${order._id}-${index}`}
-                          className="flex items-center gap-4 py-5 max-[421px]:gap-3 max-[421px]:py-4"
+                          className="flex items-center gap-4 py-5 max-[520px]:gap-3 max-[520px]:py-4"
                         >
                           {product.mainImage ? (
                             <img
                               src={product.mainImage}
                               alt=""
-                              className="h-18 w-18 shrink-0 rounded-xl border border-gray-100 bg-gray-50 object-cover max-[421px]:h-14 max-[421px]:w-14"
+                              className="h-18 w-18 shrink-0 rounded-xl border border-gray-100 bg-gray-50 object-cover max-[520px]:h-14 max-[520px]:w-14"
                             />
                           ) : (
                             <div
                               aria-hidden="true"
-                              className="flex h-18 w-18 shrink-0 items-center justify-center rounded-xl bg-[#f3f4f0] text-xs font-medium text-gray-400 max-[421px]:h-14 max-[421px]:w-14"
+                              className="flex h-18 w-18 shrink-0 items-center justify-center rounded-xl bg-[#f3f4f0] text-xs font-medium text-gray-400 max-[520px]:h-14 max-[520px]:w-14"
                             >
                               Item
                             </div>
                           )}
                           <div className="min-w-0 flex-1">
-                            <h2 className="truncate text-sm font-semibold text-gray-900 sm:text-base max-[421px]:line-clamp-2 max-[421px]:whitespace-normal max-[421px]:break-words max-[421px]:leading-5 max-[421px]:text-[0.8125rem]">
+                            <h2 className="truncate text-sm font-semibold text-gray-900 sm:text-base max-[520px]:line-clamp-2 max-[520px]:whitespace-normal max-[520px]:break-words max-[520px]:leading-5 max-[520px]:text-[0.8125rem]">
                               {name}
                             </h2>
-                            <p className="mt-1 text-xs text-gray-500 sm:text-sm max-[421px]:text-[0.6875rem]">
+                            <p className="mt-1 text-xs text-gray-500 sm:text-sm max-[520px]:text-[0.6875rem]">
                               Quantity: {item.quantity}
                             </p>
                           </div>
-                          <p className="shrink-0 text-sm font-semibold text-gray-800 max-[421px]:text-[0.8125rem]">
+                          <p className="shrink-0 text-sm font-semibold text-gray-800 max-[520px]:text-[0.8125rem]">
                             ৳{(Number(item.price || 0) * Number(item.quantity || 0)).toFixed(2)}
                           </p>
                         </div>
@@ -312,8 +312,8 @@ export default function MyOrdersPage() {
                     })}
                   </div>
 
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 bg-[#fbfbf9] px-5 py-4 sm:px-7 max-[421px]:gap-2 max-[421px]:px-3 max-[421px]:py-3">
-                    <p className="text-sm text-gray-600 max-[421px]:text-[0.8125rem]">
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 bg-[#fbfbf9] px-5 py-4 sm:px-7 max-[520px]:gap-2 max-[520px]:px-3 max-[520px]:py-3">
+                    <p className="text-sm text-gray-600 max-[520px]:text-[0.8125rem]">
                       Payment:{" "}
                       <span className="font-medium text-gray-900">
                         {order.paymentMethod === "cash_on_delivery"
@@ -321,12 +321,12 @@ export default function MyOrdersPage() {
                           : order.paymentMethod || "Not specified"}
                       </span>
                     </p>
-                    <p className="text-sm font-semibold text-gray-900 max-[421px]:text-[0.8125rem]">
+                    <p className="text-sm font-semibold text-gray-900 max-[520px]:text-[0.8125rem]">
                       Total: ৳{Number(order.totalAmount || 0).toFixed(2)}
                     </p>
                   </div>
-                  <div className="border-t border-gray-100 px-5 py-4 sm:px-7 max-[421px]:px-3 max-[421px]:py-3">
-                    <div className="flex flex-wrap items-center justify-between gap-3 max-[421px]:gap-2">
+                  <div className="border-t border-gray-100 px-5 py-4 sm:px-7 max-[520px]:px-3 max-[520px]:py-3">
+                    <div className="flex flex-wrap items-center justify-between gap-3 max-[520px]:gap-2">
                       <button
                         type="button"
                         aria-expanded={isDetailsOpen}
@@ -334,7 +334,7 @@ export default function MyOrdersPage() {
                         onClick={() =>
                           setExpandedOrderId(isDetailsOpen ? null : order._id)
                         }
-                        className="inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-[#405744] transition hover:text-[#26372c] max-[421px]:text-[0.8125rem]"
+                        className="inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-[#405744] transition hover:text-[#26372c] max-[520px]:text-[0.8125rem]"
                       >
                         {isDetailsOpen ? "Hide Order Details" : "View Order Details"}
                         <ChevronDown
@@ -344,7 +344,7 @@ export default function MyOrdersPage() {
                       </button>
                       <Link
                         to={`/my-orders/${order._id}/chat`}
-                        className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-700 transition hover:border-[#9eae9f] hover:bg-[#f7f8f5] max-[421px]:px-3 max-[421px]:py-2 max-[421px]:text-[0.6875rem]"
+                        className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-700 transition hover:border-[#9eae9f] hover:bg-[#f7f8f5] max-[520px]:px-3 max-[520px]:py-2 max-[520px]:text-[0.6875rem]"
                       >
                         <MessageCircle aria-hidden="true" className="h-4 w-4" />
                         Chat With Seller
@@ -356,7 +356,7 @@ export default function MyOrdersPage() {
                             setCancelError("");
                             setOrderToCancel(order);
                           }}
-                          className="cursor-pointer rounded-xl border border-red-100 px-3.5 py-2.5 text-sm font-semibold text-red-700 transition hover:border-red-200 hover:bg-red-50 max-[421px]:px-3 max-[421px]:py-2 max-[421px]:text-[0.6875rem]"
+                          className="cursor-pointer rounded-xl border border-red-100 px-3.5 py-2.5 text-sm font-semibold text-red-700 transition hover:border-red-200 hover:bg-red-50 max-[520px]:px-3 max-[520px]:py-2 max-[520px]:text-[0.6875rem]"
                         >
                           Cancel Order
                         </button>
@@ -367,13 +367,13 @@ export default function MyOrdersPage() {
                     <section
                       id={`order-details-${order._id}`}
                       aria-label={`Order details for ${order._id}`}
-                      className="border-t border-gray-100 bg-[#f8f9f6] px-5 py-6 sm:px-7 max-[421px]:px-3 max-[421px]:py-4"
+                      className="border-t border-gray-100 bg-[#f8f9f6] px-5 py-6 sm:px-7 max-[520px]:px-3 max-[520px]:py-4"
                     >
-                      <h2 className="text-lg font-semibold text-gray-900 max-[421px]:text-base">
+                      <h2 className="text-lg font-semibold text-gray-900 max-[520px]:text-base">
                         Order Details
                       </h2>
                       <div className="mt-5 grid gap-4 md:grid-cols-2">
-                        <div className="rounded-2xl border border-gray-200/80 bg-white p-5 max-[421px]:p-4">
+                        <div className="rounded-2xl border border-gray-200/80 bg-white p-5 max-[520px]:p-4">
                           <h3 className="text-sm font-semibold text-gray-900">
                             Delivery status
                           </h3>
@@ -414,7 +414,7 @@ export default function MyOrdersPage() {
                         </div>
 
                         <div className="space-y-4">
-                          <div className="rounded-2xl border border-gray-200/80 bg-white p-5 max-[421px]:p-4">
+                          <div className="rounded-2xl border border-gray-200/80 bg-white p-5 max-[520px]:p-4">
                             <h3 className="text-sm font-semibold text-gray-900">
                               Delivery address
                             </h3>
@@ -436,7 +436,7 @@ export default function MyOrdersPage() {
                             </address>
                           </div>
 
-                          <div className="rounded-2xl border border-gray-200/80 bg-white p-5 max-[421px]:p-4">
+                          <div className="rounded-2xl border border-gray-200/80 bg-white p-5 max-[520px]:p-4">
                             <h3 className="text-sm font-semibold text-gray-900">
                               Payment and order summary
                             </h3>
@@ -490,21 +490,21 @@ export default function MyOrdersPage() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="cancel-order-title"
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl max-[421px]:p-4"
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl max-[520px]:p-4"
           >
-            <h2 id="cancel-order-title" className="text-lg font-semibold text-gray-900 max-[421px]:text-base">
+            <h2 id="cancel-order-title" className="text-lg font-semibold text-gray-900 max-[520px]:text-base">
               Cancel this order?
             </h2>
-            <p className="mt-2 text-sm text-gray-600 max-[421px]:text-[0.8125rem]">
+            <p className="mt-2 text-sm text-gray-600 max-[520px]:text-[0.8125rem]">
               Pending order #{orderToCancel._id} will be permanently removed from
               your orders.
             </p>
             {cancelError && (
-              <p               className="mt-3 text-sm text-red-600 max-[421px]:text-[0.8125rem]" role="alert">
+              <p               className="mt-3 text-sm text-red-600 max-[520px]:text-[0.8125rem]" role="alert">
                 {cancelError}
               </p>
             )}
-            <div className="mt-6 flex justify-end gap-3 max-[421px]:gap-2">
+            <div className="mt-6 flex justify-end gap-3 max-[520px]:gap-2">
               <button
                 type="button"
                 disabled={isCancelling}
@@ -512,7 +512,7 @@ export default function MyOrdersPage() {
                   setOrderToCancel(null);
                   setCancelError("");
                 }}
-                className="cursor-pointer rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 max-[421px]:flex-1 max-[421px]:px-2 max-[421px]:text-[0.6875rem]"
+                className="cursor-pointer rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 max-[520px]:flex-1 max-[520px]:px-2 max-[520px]:text-[0.6875rem]"
               >
                 Keep Order
               </button>
@@ -520,7 +520,7 @@ export default function MyOrdersPage() {
                 type="button"
                 disabled={isCancelling}
                 onClick={handleCancelOrder}
-                className="cursor-pointer rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-wait disabled:opacity-60 max-[421px]:flex-1 max-[421px]:px-2 max-[421px]:text-[0.6875rem]"
+                className="cursor-pointer rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-wait disabled:opacity-60 max-[520px]:flex-1 max-[520px]:px-2 max-[520px]:text-[0.6875rem]"
               >
                 {isCancelling ? "Cancelling..." : "Confirm Cancellation"}
               </button>

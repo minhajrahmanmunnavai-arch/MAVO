@@ -1,0 +1,87 @@
+@media (min-width: 421px) and (max-width: 520px) {
+  main.product-details-page {
+    padding: 2rem 1rem;
+  }
+
+  .product-details-page .product-overview-card {
+    gap: 1.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .product-details-page .product-image-frame {
+    min-height: 16rem;
+  }
+
+  .product-details-page .product-info-panel {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .product-details-page .product-title {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .product-details-page .product-metadata {
+    margin-top: 0.875rem;
+    font-size: 0.8125rem;
+  }
+
+  .product-details-page .product-prices {
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+
+  .product-details-page .product-prices > span:first-child {
+    font-size: 0.875rem;
+  }
+
+  .product-details-page .product-prices > span:nth-child(2) {
+    font-size: 0.8125rem;
+  }
+
+  .product-details-page .product-description {
+    margin-top: 1rem;
+  }
+
+  .product-details-page .product-description > p:first-child {
+    font-size: 0.875rem;
+  }
+
+  .product-details-page .product-description > p:last-child {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .product-details-page .product-stock {
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .product-details-page .product-actions {
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+
+  .product-details-page .product-actions > button,
+  .product-details-page .product-wishlist-row > button {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .product-details-page .product-reviews {
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+
+  .product-details-page .product-reviews h2 {
+    font-size: 1.25rem;
+  }
+
+  .product-details-page .product-reviews p.text-sm {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+}

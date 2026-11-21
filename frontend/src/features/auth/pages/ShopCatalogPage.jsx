@@ -181,7 +181,7 @@ export default function ShopCatalogPage() {
   return (
     <>
       <main className="min-h-screen bg-[#faf9f6]">
-        <section className="relative overflow-hidden bg-stone-900 px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 max-[421px]:px-4 max-[421px]:py-10">
+        <section className="relative overflow-hidden bg-stone-900 px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 max-[520px]:px-4 max-[520px]:py-10">
           <div className="absolute -right-20 -top-32 h-96 w-96 rounded-full border border-white/10" />
           <div className="absolute -right-4 -top-16 h-64 w-64 rounded-full border border-white/10" />
           <div className="relative mx-auto max-w-7xl">
@@ -189,16 +189,16 @@ export default function ShopCatalogPage() {
               <Sparkles aria-hidden="true" className="h-4 w-4" />
               The MAVO collection
             </p>
-            <h1 className="mt-5 max-w-2xl font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl max-[421px]:mt-4 max-[421px]:text-[clamp(1.875rem,8vw,2.25rem)]">
+            <h1 className="mt-5 max-w-2xl font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl max-[520px]:mt-4 max-[520px]:text-[clamp(1.875rem,8vw,2.25rem)]">
               Thoughtful finds for everyday living.
             </h1>
-            <p className="mt-5 max-w-xl text-sm leading-7 text-stone-300 sm:text-base max-[421px]:mt-4 max-[421px]:leading-6">
+            <p className="mt-5 max-w-xl text-sm leading-7 text-stone-300 sm:text-base max-[520px]:mt-4 max-[520px]:leading-6">
               Explore considered essentials, distinctive pieces, and new
               favorites selected for your home and lifestyle.
             </p>
             <a
               href="#catalog"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition hover:bg-amber-100 max-[421px]:mt-6 max-[421px]:px-5 max-[421px]:py-2.5"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition hover:bg-amber-100 max-[520px]:mt-6 max-[520px]:px-5 max-[520px]:py-2.5"
             >
               Explore the catalog
               <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
@@ -206,8 +206,8 @@ export default function ShopCatalogPage() {
           </div>
         </section>
 
-        <section id="catalog" className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-12 max-[421px]:px-4 max-[421px]:py-8">
-          <header className="mb-8 flex flex-wrap items-end justify-between gap-4 max-[421px]:mb-6">
+        <section id="catalog" className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-12 max-[520px]:px-4 max-[520px]:py-8">
+          <header className="mb-8 flex flex-wrap items-end justify-between gap-4 max-[520px]:mb-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
                 Find your next favorite
@@ -225,8 +225,8 @@ export default function ShopCatalogPage() {
             </p>
           </header>
 
-          <div className="mb-8 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-5 max-[421px]:mb-6 max-[421px]:p-3">
-            <div className="grid gap-4 lg:grid-cols-[minmax(220px,1.5fr)_repeat(3,minmax(150px,1fr))] max-[421px]:gap-3">
+          <div className="mb-8 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-5 max-[520px]:mb-6 max-[520px]:p-3">
+            <div className="grid gap-4 lg:grid-cols-[minmax(220px,1.5fr)_repeat(3,minmax(150px,1fr))] max-[520px]:gap-3">
               <label className="relative block">
                 <span className="sr-only">Search the catalog</span>
                 <Search
@@ -370,7 +370,7 @@ export default function ShopCatalogPage() {
               </button>
             </div>
           ) : visibleProducts.length > 0 ? (
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-[421px]:gap-3 min-[320px]:max-[421px]:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-[520px]:gap-3 min-[320px]:max-[520px]:grid-cols-2">
               {visibleProducts.map((product) => {
                 const productId = String(product._id);
                 const salePrice = getSalePrice(product);
@@ -384,7 +384,7 @@ export default function ShopCatalogPage() {
                     key={productId}
                     className="group overflow-hidden rounded-2xl border border-stone-200 bg-white transition hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-lg"
                   >
-                    <div className="relative aspect-4/4.5 overflow-hidden bg-stone-100 max-[421px]:aspect-square">
+                    <div className="relative aspect-4/4.5 overflow-hidden bg-stone-100 max-[520px]:aspect-square">
                       <Link
                         to={`/product/${productId}`}
                         aria-label={`View ${product.title}`}
@@ -404,7 +404,7 @@ export default function ShopCatalogPage() {
                         )}
                       </Link>
                       {salePrice !== null && (
-                        <span className="absolute left-3 top-3 max-w-[calc(100%_-_4rem)] truncate rounded-full bg-red-700 px-3 py-1 text-xs font-semibold text-white max-[421px]:px-2 max-[421px]:py-1 max-[421px]:text-[0.625rem]">
+                        <span className="absolute left-3 top-3 max-w-[calc(100%_-_4rem)] truncate rounded-full bg-red-700 px-3 py-1 text-xs font-semibold text-white max-[520px]:px-2 max-[520px]:py-1 max-[520px]:text-[0.625rem]">
                           {Number(product.discountPercentage) > 0
                             ? `${Math.round(Number(product.discountPercentage))}% off`
                             : "Special price"}
@@ -433,25 +433,25 @@ export default function ShopCatalogPage() {
                       </button>
                     </div>
 
-                    <div className="p-4 max-[421px]:p-2">
+                    <div className="p-4 max-[520px]:p-2">
                       <p className="break-words text-xs font-medium uppercase tracking-[0.14em] text-stone-500">
                         {product.brandName || product.shopName || product.category || "MAVO"}
                       </p>
                       <Link to={`/product/${productId}`} className="mt-2 block">
-                        <h3 className="line-clamp-2 min-h-12 break-words font-serif text-lg leading-6 text-stone-900 group-hover:text-stone-600 max-[421px]:min-h-10 max-[421px]:text-sm max-[421px]:leading-5">
+                        <h3 className="line-clamp-2 min-h-12 break-words font-serif text-lg leading-6 text-stone-900 group-hover:text-stone-600 max-[520px]:min-h-10 max-[520px]:text-sm max-[520px]:leading-5">
                           {product.title}
                         </h3>
                       </Link>
                       {product.category && (
                         <p className="mt-1 text-xs text-stone-500">{product.category}</p>
                       )}
-                      <div className="mt-4 flex items-end justify-between gap-3 max-[421px]:mt-3 max-[421px]:flex-col max-[421px]:items-stretch max-[421px]:gap-2">
+                      <div className="mt-4 flex items-end justify-between gap-3 max-[520px]:mt-3 max-[520px]:flex-col max-[520px]:items-stretch max-[520px]:gap-2">
                         <div className="flex flex-wrap items-baseline gap-x-1.5">
-                          <p className="break-words font-semibold text-stone-900 max-[421px]:text-xs max-[421px]:leading-4">
+                          <p className="break-words font-semibold text-stone-900 max-[520px]:text-xs max-[520px]:leading-4">
                             {formatPrice(salePrice ?? product.price)}
                           </p>
                           {salePrice !== null && (
-                            <p className="text-xs text-stone-400 line-through max-[421px]:text-[0.625rem] max-[421px]:leading-4">
+                            <p className="text-xs text-stone-400 line-through max-[520px]:text-[0.625rem] max-[520px]:leading-4">
                               {formatPrice(product.price)}
                             </p>
                           )}
@@ -460,7 +460,7 @@ export default function ShopCatalogPage() {
                           type="button"
                           onClick={() => handleAddToCart(product)}
                           disabled={!availableStock}
-                          className="inline-flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-black disabled:cursor-not-allowed disabled:bg-stone-300 max-[421px]:w-full max-[421px]:justify-center max-[421px]:gap-1.5 max-[421px]:px-2 max-[421px]:py-2"
+                          className="inline-flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-black disabled:cursor-not-allowed disabled:bg-stone-300 max-[520px]:w-full max-[520px]:justify-center max-[520px]:gap-1.5 max-[520px]:px-2 max-[520px]:py-2"
                         >
                           <ShoppingBag aria-hidden="true" className="h-4 w-4" />
                           {availableStock ? "Add" : "Sold out"}

@@ -1,5 +1,7 @@
 const configuredOrigins = process.env.CORS_ORIGINS || process.env.FRONTEND_URL ||
-    (process.env.NODE_ENV === "production" ? "" : "http://localhost:5173");
+    (process.env.NODE_ENV === "production"
+        ? ""
+        : "http://localhost:5173,http://127.0.0.1:5173");
 
 const allowedOrigins = new Set(
     configuredOrigins
