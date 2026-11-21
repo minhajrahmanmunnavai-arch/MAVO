@@ -84,7 +84,7 @@ const Right = () => {
         <div className="relative">
 
             {/* Header Icons */}
-            <div className="flex flex-row items-center gap-2 sm:gap-3 md:gap-5">
+            <div className="navbar-actions flex flex-row items-center gap-2 sm:gap-3 md:gap-5">
 
                 {/* Notifications */}
                 <div ref={notificationsRef} className="relative">

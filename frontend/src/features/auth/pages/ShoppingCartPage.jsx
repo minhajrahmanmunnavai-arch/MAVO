@@ -13,6 +13,7 @@ import {
 import { useCart } from "../Hooks/useCart.js";
 import { useAuth } from "../Hooks/useAuth.js";
 import { createOrder } from "../services/order.api.js";
+import "./ShoppingCartPage.responsive.css";
 
 export default function ShoppingCartPage() {
   const { user, showToast } = useAuth();
@@ -129,11 +130,11 @@ export default function ShoppingCartPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#faf9f7] px-5 py-8 sm:px-8 sm:py-12 max-[520px]:px-3 max-[520px]:py-6">
+    <main className="shopping-cart-page min-h-screen bg-[#faf9f7] px-5 py-8 sm:px-8 sm:py-12 max-[520px]:px-3 max-[520px]:py-6">
       <div className="mx-auto max-w-7xl">
         <header className="relative overflow-hidden rounded-3xl border border-rose-100 bg-gradient-to-br from-rose-50 via-white to-amber-50 px-6 py-8 shadow-sm sm:px-9 sm:py-10 max-[520px]:rounded-2xl max-[520px]:px-4 max-[520px]:py-6">
           <div aria-hidden="true" className="absolute -right-10 -top-14 h-48 w-48 rounded-full bg-rose-100/60 blur-2xl" />
-          <div className="relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between max-[520px]:gap-4">
+          <div className="shopping-cart-header-content relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between max-[520px]:gap-4">
             <div className="max-w-2xl">
               <span className="inline-flex items-center gap-2 rounded-full border border-rose-100 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-rose-700 max-[520px]:text-[0.625rem]">
                 <Sparkles size={14} />
@@ -146,7 +147,7 @@ export default function ShoppingCartPage() {
                 Review your picks, adjust quantities, and get everything ready for checkout.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-3 max-[520px]:gap-2">
+            <div className="shopping-cart-header-actions flex flex-wrap items-center gap-3 max-[520px]:gap-2">
               <span className="inline-flex items-center gap-2 rounded-2xl border border-white bg-white/85 px-4 py-3 text-sm font-medium text-stone-700 shadow-sm max-[520px]:px-3 max-[520px]:py-2 max-[520px]:text-[0.8125rem]">
                 <ShoppingBag size={17} className="text-rose-600" />
                 {cartCount} {cartCount === 1 ? "item" : "items"}
@@ -185,7 +186,7 @@ export default function ShoppingCartPage() {
             <div className="h-64 animate-pulse rounded-2xl bg-stone-200" />
           </div>
         ) : cartItems.length === 0 ? (
-          <div className="mt-8 rounded-3xl border border-stone-200 bg-white px-6 py-14 text-center shadow-sm sm:py-20 max-[520px]:rounded-2xl max-[520px]:px-4 max-[520px]:py-10">
+          <div className="shopping-cart-empty-state mt-8 rounded-3xl border border-stone-200 bg-white px-6 py-14 text-center shadow-sm sm:py-20 max-[520px]:rounded-2xl max-[520px]:px-4 max-[520px]:py-10">
             <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-50 text-rose-600">
               <ShoppingBag size={28} />
             </span>
@@ -221,7 +222,7 @@ export default function ShoppingCartPage() {
               {cartItems.map((item) => (
                 <article
                   key={item.id}
-                  className={`flex flex-wrap items-center gap-4 rounded-2xl border bg-white p-4 shadow-sm transition sm:p-5 max-[520px]:gap-3 max-[520px]:rounded-xl max-[520px]:p-3 ${
+                  className={`shopping-cart-item flex flex-wrap items-center gap-4 rounded-2xl border bg-white p-4 shadow-sm transition sm:p-5 max-[520px]:gap-3 max-[520px]:rounded-xl max-[520px]:p-3 ${
                     selectedItems.some((selectedItem) => selectedItem.id === item.id)
                       ? "border-rose-200"
                       : "border-stone-200"
@@ -262,7 +263,7 @@ export default function ShoppingCartPage() {
                       <span className="ml-1 text-xs font-normal text-stone-500 max-[520px]:text-[0.625rem]">each</span>
                     </p>
                   </div>
-                  <div className="ml-auto flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-end max-[520px]:gap-2">
+                  <div className="shopping-cart-item-actions ml-auto flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-end max-[520px]:gap-2">
                     <div className="inline-flex items-center rounded-full border border-stone-200 bg-stone-50 p-1">
                       <button
                         type="button"
@@ -310,7 +311,7 @@ export default function ShoppingCartPage() {
               ))}
             </section>
 
-            <aside className="h-fit rounded-2xl border border-stone-200 bg-white p-5 shadow-sm lg:sticky lg:top-6 sm:p-6 max-[520px]:rounded-xl max-[520px]:p-4">
+            <aside className="shopping-cart-summary h-fit rounded-2xl border border-stone-200 bg-white p-5 shadow-sm lg:sticky lg:top-6 sm:p-6 max-[520px]:rounded-xl max-[520px]:p-4">
               <div className="flex items-center gap-3 border-b border-stone-100 pb-4">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-700">
                   <PackageCheck size={19} />
@@ -368,7 +369,7 @@ export default function ShoppingCartPage() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="checkout-dialog-title"
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-3xl border border-stone-200 bg-white p-6 shadow-2xl sm:p-8 max-[520px]:rounded-2xl max-[520px]:p-4"
+            className="shopping-cart-checkout-dialog max-h-[90vh] w-full max-w-lg overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-3xl border border-stone-200 bg-white p-6 shadow-2xl sm:p-8 max-[520px]:rounded-2xl max-[520px]:p-4"
           >
             <div className="mb-6 flex items-center justify-between gap-4 border-b border-stone-100 pb-5">
               <div className="flex items-center gap-3">

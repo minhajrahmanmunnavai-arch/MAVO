@@ -78,13 +78,40 @@
   }
 }
 
-@media (min-width: 621px) {
+@media (min-width: 821px) {
   .mobile-account-menu {
     display: none;
   }
 }
 
-@media (max-width: 620px) {
+@media (min-width: 640px) and (max-width: 820px) {
+  .navbar-upper-bar {
+    column-gap: 0.5rem;
+    row-gap: 0.125rem;
+  }
+
+  .navbar-upper-bar .complimentary,
+  .navbar-upper-bar .navbar-upper-text {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  header .navbar-main-row {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  header .navbar-main-row .logo {
+    font-size: 1.5rem;
+  }
+
+  header .navbar-control-actions,
+  header .navbar-main-row .navbar-actions {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 820px) {
   .navbar-menu-icon {
     width: 1.125rem;
     height: 1.125rem;

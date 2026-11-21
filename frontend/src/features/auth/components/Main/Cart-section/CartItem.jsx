@@ -17,7 +17,7 @@ const CartItem = ({
     };
 
     return (
-        <article className="group flex w-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <article className="wishlist-product-card group flex w-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
                 <img
                     src={img}

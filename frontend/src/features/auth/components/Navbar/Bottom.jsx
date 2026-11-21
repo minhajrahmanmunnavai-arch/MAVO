@@ -23,10 +23,10 @@ const Bottom = () => {
 
   return (
     <div className="relative z-50 w-full border-b border-gray-200 bg-white shadow-sm">
-      <div className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center gap-x-3 gap-y-3 px-4 py-2 sm:px-6 max-[321px]:gap-x-2 max-[321px]:px-3 lg:flex-nowrap lg:gap-8 lg:px-10 xl:px-16">
+      <div className="navbar-main-row mx-auto flex w-full max-w-[1600px] flex-wrap items-center gap-x-3 gap-y-3 px-4 py-2 sm:px-6 max-[321px]:gap-x-2 max-[321px]:px-3 lg:flex-nowrap lg:gap-8 lg:px-10 xl:px-16">
         <Left />
         <Middle className="hidden lg:flex" />
-        <div className="ml-auto flex items-center gap-2 sm:gap-3 max-[321px]:gap-1 lg:order-last lg:ml-auto">
+        <div className="navbar-control-actions ml-auto flex items-center gap-2 sm:gap-3 max-[321px]:gap-1 lg:order-last lg:ml-auto">
           <Searchbar />
           <Right />
           <button

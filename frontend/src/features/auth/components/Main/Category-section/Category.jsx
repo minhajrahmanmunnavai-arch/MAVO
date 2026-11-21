@@ -38,7 +38,7 @@ const Category = () => {
 
 
   return (
-    <section className="mt-25 px-37" >
+    <section className="category-section mt-25 px-37" >
       {details.map((elem, idx) => (
         <Curated
           key={idx}

@@ -7,6 +7,7 @@ import { getProductById } from "../services/productupload.api.js";
 import { useState } from "react";
 import { Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
+import "./Wishlist.responsive.css";
 
 const Cart = () => {
   const { wishlist, loading, loadError, removeFromWishlist } = useWishlist();
@@ -40,7 +41,7 @@ const Cart = () => {
   };
 
   return (
-    <main className="min-h-[70vh] bg-[#faf9f7] px-5 py-8 sm:px-8 sm:py-12 max-[621px]:px-3 max-[621px]:py-6">
+    <main className="wishlist-page min-h-[70vh] bg-[#faf9f7] px-5 py-8 sm:px-8 sm:py-12 max-[621px]:px-3 max-[621px]:py-6">
       <div className="mx-auto max-w-7xl">
         <CartSection count={wishlist.length} />
 
@@ -52,7 +53,7 @@ const Cart = () => {
           )}
 
           {loading ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-[621px]:gap-3 min-[320px]:max-[621px]:grid-cols-2">
+            <div className="wishlist-product-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-[621px]:gap-3 min-[320px]:max-[621px]:grid-cols-2">
               {Array.from({ length: 4 }, (_, index) => (
                 <div
                   key={index}
@@ -75,7 +76,7 @@ const Cart = () => {
                   ? "One lovely find saved for later."
                   : `Here are your ${wishlist.length} saved finds.`}
               </p>
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-[621px]:gap-3 min-[320px]:max-[621px]:grid-cols-2">
+              <div className="wishlist-product-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-[621px]:gap-3 min-[320px]:max-[621px]:grid-cols-2">
                 {wishlist.map((elem) => (
                   <CartItem
                     key={elem.id}

@@ -123,11 +123,11 @@ const Cart = (props) => {
 
         <div className="pt-2 flex items-baseline gap-2">
           <span className="text-xl font-bold text-gray-900">
-            ৳{props.discountPrice}.00
+            <span className="currency-symbol">৳</span>{props.discountPrice}.00
           </span>
 
           <span className="text-sm text-gray-400 line-through">
-            ৳{props.price}.00
+            <span className="currency-symbol">৳</span>{props.price}.00
           </span>
         </div>
       </Link>
