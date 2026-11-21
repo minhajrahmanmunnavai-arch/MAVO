@@ -409,6 +409,30 @@
 }
 
 @media (min-width: 421px) and (max-width: 520px) {
+    .home-page>footer h1,
+    .home-page>footer h2 {
+        font-size: 1rem;
+        line-height: 1.25rem;
+    }
+
+    .home-page>footer>section>div:first-child>div:first-child h1 {
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+    }
+
+    .home-page>footer>section>div:first-child>div:first-child>p,
+    .home-page>footer>section>div:first-child>div:not(:first-child) p,
+    .home-page>footer>section>div:last-child>p {
+        font-size: 0.8125rem;
+        line-height: 1.25rem;
+    }
+
+    .home-page>footer nav a,
+    .home-page>footer>section>div:last-child a {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
     .home-page>section:nth-child(3)>div.flash-offerings-header {
         align-items: center;
         flex-wrap: nowrap;
@@ -530,6 +554,12 @@
     .best-deal-card>a>div:last-of-type>span:last-child {
         font-size: 0.6875rem;
         line-height: 1rem;
+    }
+
+    .all-products-heading {
+        font-size: clamp(1rem, 4.3vw, 1.125rem);
+        line-height: 1.25;
+        white-space: nowrap;
     }
 
     .home-page>section:nth-child(2)>div.category-card-grid:last-child {
