@@ -78,13 +78,13 @@
   }
 }
 
-@media (min-width: 521px) {
+@media (min-width: 621px) {
   .mobile-account-menu {
     display: none;
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 620px) {
   .navbar-menu-icon {
     width: 1.125rem;
     height: 1.125rem;

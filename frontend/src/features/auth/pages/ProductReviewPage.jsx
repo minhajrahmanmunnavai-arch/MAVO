@@ -131,7 +131,7 @@ export default function ProductReviewPage() {
   };
 
   return (
-    <main className="min-h-[70vh] bg-stone-50 px-5 py-10 sm:px-8 max-[421px]:px-3 max-[421px]:py-6">
+    <main className="min-h-[70vh] bg-stone-50 px-5 py-10 sm:px-8 max-[621px]:px-3 max-[621px]:py-6">
       <div className="mx-auto max-w-3xl">
         <Link
           to="/my-orders"
@@ -151,12 +151,12 @@ export default function ProductReviewPage() {
           </p>
         ) : (
           <section className="mt-6 overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
-            <div className="flex items-center gap-4 border-b border-stone-100 bg-gradient-to-r from-amber-50/80 to-white p-6 sm:p-8 max-[421px]:gap-3 max-[421px]:p-4">
+            <div className="flex items-center gap-4 border-b border-stone-100 bg-gradient-to-r from-amber-50/80 to-white p-6 sm:p-8 max-[621px]:gap-3 max-[621px]:p-4">
               {eligibility.product.image && (
                 <img
                   src={eligibility.product.image}
                   alt=""
-                  className="h-20 w-20 shrink-0 rounded-2xl border border-white bg-white object-contain p-1 shadow-sm max-[421px]:h-16 max-[421px]:w-16"
+                  className="h-20 w-20 shrink-0 rounded-2xl border border-white bg-white object-contain p-1 shadow-sm max-[621px]:h-16 max-[621px]:w-16"
                 />
               )}
               <div className="min-w-0">
@@ -164,7 +164,7 @@ export default function ProductReviewPage() {
                   <CheckCircle2 size={14} />
                   Verified delivery
                 </p>
-                <h1 className="mt-2 break-words font-serif text-2xl font-semibold leading-tight text-stone-900 sm:text-3xl max-[421px]:text-xl">
+                <h1 className="mt-2 break-words font-serif text-2xl font-semibold leading-tight text-stone-900 sm:text-3xl max-[621px]:text-xl">
                   {eligibility.product.title}
                 </h1>
                 {!eligibility.review && (
@@ -195,8 +195,8 @@ export default function ProductReviewPage() {
                 </div>
               </div>
             ) : (
-              <form className="space-y-5 p-6 sm:p-8 max-[421px]:space-y-4 max-[421px]:p-4" onSubmit={handleSubmit}>
-                <fieldset className="rounded-2xl border border-amber-200 bg-amber-50/60 p-5 sm:p-6 max-[421px]:p-3">
+              <form className="space-y-5 p-6 sm:p-8 max-[621px]:space-y-4 max-[621px]:p-4" onSubmit={handleSubmit}>
+                <fieldset className="rounded-2xl border border-amber-200 bg-amber-50/60 p-5 sm:p-6 max-[621px]:p-3">
                   <legend className="sr-only">Your rating</legend>
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
@@ -234,7 +234,7 @@ export default function ProductReviewPage() {
                   </div>
                 </fieldset>
 
-                <label className="block rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 max-[421px]:p-4">
+                <label className="block rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 max-[621px]:p-4">
                   <span className="flex items-center gap-2 text-sm font-semibold text-stone-900">
                     <MessageSquareText size={17} className="text-stone-500" />
                     Tell us about your experience
@@ -258,7 +258,7 @@ export default function ProductReviewPage() {
 
                 <section
                   aria-labelledby="review-media-heading"
-                  className="rounded-2xl border border-dashed border-stone-300 bg-stone-50/70 p-5 sm:p-6 max-[421px]:p-4"
+                  className="rounded-2xl border border-dashed border-stone-300 bg-stone-50/70 p-5 sm:p-6 max-[621px]:p-4"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>

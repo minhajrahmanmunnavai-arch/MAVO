@@ -19,7 +19,7 @@ const Loading = () => {
                 {/* Loading Text */}
                 <div className="text-center">
 
-                    <h2 className="loading-title text-xl font-semibold tracking-wide text-white">
+                    <h2 className="loading-title text-xl font-semibold tracking-wide text-black">
                         Loading...
                     </h2>
 

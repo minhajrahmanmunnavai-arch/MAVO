@@ -3,7 +3,7 @@
   height: 1.5rem;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 620px) {
   .navbar-action-icon {
     width: 1.25rem;
     height: 1.25rem;
