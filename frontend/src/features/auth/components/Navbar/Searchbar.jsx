@@ -306,7 +306,10 @@ const Searchbar = () => {
         )}
       </div>
 
-      <div ref={desktopSearchRef} className="hidden lg:block">
+      <div
+        ref={desktopSearchRef}
+        className="desktop-search-input hidden lg:block"
+      >
         {searchInput(
           "desktop",
           "flex h-11 w-full min-w-0 items-center gap-3 rounded-xl bg-[#f5f5f4] px-3 sm:px-4 lg:w-56 xl:w-72",

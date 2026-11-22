@@ -170,12 +170,12 @@ export default function ShoppingCartPage() {
         )}
 
         {loading ? (
-          <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
-            <div className="space-y-4">
+          <div className="shopping-cart-loading mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
+            <div className="shopping-cart-loading-items space-y-4">
               {Array.from({ length: 3 }, (_, index) => (
-                <div key={index} className="flex gap-4 rounded-2xl border border-stone-200 bg-white p-4">
+                <div key={index} className="shopping-cart-loading-item flex gap-4 rounded-2xl border border-stone-200 bg-white p-4">
                   <div className="h-24 w-24 animate-pulse rounded-xl bg-stone-200" />
-                  <div className="flex-1 space-y-3 py-2">
+                  <div className="shopping-cart-loading-content flex-1 space-y-3 py-2">
                     <div className="h-3 w-1/4 animate-pulse rounded bg-stone-200" />
                     <div className="h-5 w-2/3 animate-pulse rounded bg-stone-200" />
                     <div className="h-8 w-28 animate-pulse rounded-full bg-stone-200" />
@@ -183,7 +183,7 @@ export default function ShoppingCartPage() {
                 </div>
               ))}
             </div>
-            <div className="h-64 animate-pulse rounded-2xl bg-stone-200" />
+            <div className="shopping-cart-loading-summary h-64 animate-pulse rounded-2xl bg-stone-200" />
           </div>
         ) : cartItems.length === 0 ? (
           <div className="shopping-cart-empty-state mt-8 rounded-3xl border border-stone-200 bg-white px-6 py-14 text-center shadow-sm sm:py-20 max-[520px]:rounded-2xl max-[520px]:px-4 max-[520px]:py-10">

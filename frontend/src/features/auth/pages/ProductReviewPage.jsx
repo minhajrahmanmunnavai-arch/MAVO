@@ -13,6 +13,7 @@ import {
   getReviewEligibility,
   submitProductReview,
 } from "../services/review.api.js";
+import "./ProductReviewPage.responsive.css";
 
 const MAX_FILES = 3;
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -131,7 +132,7 @@ export default function ProductReviewPage() {
   };
 
   return (
-    <main className="min-h-[70vh] bg-stone-50 px-5 py-10 sm:px-8 max-[621px]:px-3 max-[621px]:py-6">
+    <main className="product-review-page min-h-[70vh] bg-stone-50 px-5 py-10 sm:px-8 max-[621px]:px-3 max-[621px]:py-6">
       <div className="mx-auto max-w-3xl">
         <Link
           to="/my-orders"
@@ -150,8 +151,8 @@ export default function ProductReviewPage() {
             Loading review details...
           </p>
         ) : (
-          <section className="mt-6 overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
-            <div className="flex items-center gap-4 border-b border-stone-100 bg-gradient-to-r from-amber-50/80 to-white p-6 sm:p-8 max-[621px]:gap-3 max-[621px]:p-4">
+          <section className="product-review-card mt-6 overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+            <div className="product-review-product-header flex items-center gap-4 border-b border-stone-100 bg-gradient-to-r from-amber-50/80 to-white p-6 sm:p-8 max-[621px]:gap-3 max-[621px]:p-4">
               {eligibility.product.image && (
                 <img
                   src={eligibility.product.image}
@@ -176,7 +177,7 @@ export default function ProductReviewPage() {
             </div>
 
             {eligibility.review ? (
-              <div className="pt-6">
+              <div className="product-review-submitted pt-6">
                 <p className="font-semibold text-stone-900">Your review has been submitted</p>
                 <div className="mt-3 flex items-center gap-1" aria-label={`${eligibility.review.rating} out of 5 stars`}>
                   {Array.from({ length: 5 }, (_, index) => (
@@ -195,7 +196,7 @@ export default function ProductReviewPage() {
                 </div>
               </div>
             ) : (
-              <form className="space-y-5 p-6 sm:p-8 max-[621px]:space-y-4 max-[621px]:p-4" onSubmit={handleSubmit}>
+              <form className="product-review-form space-y-5 p-6 sm:p-8 max-[621px]:space-y-4 max-[621px]:p-4" onSubmit={handleSubmit}>
                 <fieldset className="rounded-2xl border border-amber-200 bg-amber-50/60 p-5 sm:p-6 max-[621px]:p-3">
                   <legend className="sr-only">Your rating</legend>
                   <div className="flex flex-wrap items-center justify-between gap-3">
