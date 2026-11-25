@@ -48,7 +48,7 @@ const normalizeApiError = (error) => {
 
         if (
             (error.response?.status >= 500 || containsTechnicalDetails) &&
-            error.response.data &&
+            error.response?.data &&
             typeof error.response.data === "object"
         ) {
             error.response.data = {
