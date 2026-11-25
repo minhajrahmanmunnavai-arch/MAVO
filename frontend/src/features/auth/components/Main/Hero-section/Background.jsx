@@ -1,6 +1,7 @@
 import { Download } from "lucide-react";
 
-const androidApkDownloadUrl = import.meta.env.VITE_ANDROID_APK_DOWNLOAD_URL?.trim();
+const androidApkDownloadUrl =
+  "https://github.com/minhajrahmanmunnavai-arch/MAVO/releases/download/v1.0/app-release.apk";
 
 const Background = () => {
   return (
@@ -44,9 +45,8 @@ const Background = () => {
 
             {/* Second Button */}
             <a
-              href={androidApkDownloadUrl || undefined}
+              href={androidApkDownloadUrl}
               download
-              aria-disabled={!androidApkDownloadUrl}
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap bg-neutral-100 hover:bg-white text-neutral-900 px-6 py-3 rounded-lg text-sm font-semibold transition-colors duration-300 shadow-sm cursor-pointer active:scale-95"
             >
               <Download size={16} aria-hidden="true" />
