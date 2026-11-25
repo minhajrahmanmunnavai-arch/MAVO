@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,7 +15,11 @@ import { useAuth } from "../Hooks/useAuth.js";
 import { createOrder } from "../services/order.api.js";
 import "./ShoppingCartPage.responsive.css";
 
+const createCheckoutIdempotencyKey = () =>
+  `checkout-${Date.now()}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
+
 export default function ShoppingCartPage() {
+  const navigate = useNavigate();
   const { user, showToast } = useAuth();
   const {
     cartItems,
@@ -32,6 +36,7 @@ export default function ShoppingCartPage() {
   const [checkoutStep, setCheckoutStep] = useState("address");
   const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
   const [paymentMethod] = useState("cash_on_delivery");
+  const checkoutAttempt = useRef(null);
   const [address, setAddress] = useState({
     fullName: user?.username || "",
     phoneNumber: "",
@@ -96,27 +101,31 @@ export default function ShoppingCartPage() {
       return;
     }
 
+    const orderPayload = {
+      products: selectedItems.map((item) => ({
+        product: item.id,
+        quantity: item.quantity,
+        price: Number(item.price),
+      })),
+      totalAmount: total,
+      address,
+      paymentMethod,
+    };
+    const fingerprint = JSON.stringify(orderPayload);
+    if (checkoutAttempt.current?.fingerprint !== fingerprint) {
+      checkoutAttempt.current = {
+        fingerprint,
+        key: createCheckoutIdempotencyKey(),
+      };
+    }
+
     setIsSubmittingOrder(true);
     setActionError("");
     try {
-      const order = await createOrder({
-        products: selectedItems.map((item) => ({
-          product: item.id,
-          quantity: item.quantity,
-          price: Number(item.price),
-        })),
-        totalAmount: total,
-        address,
-        paymentMethod,
+      await createOrder({
+        ...orderPayload,
+        idempotencyKey: checkoutAttempt.current.key,
       });
-
-      for (const item of selectedItems) {
-        await removeFromCart(item.id, { silent: true });
-      }
-
-      setSelectedIds([]);
-      setIsCheckoutOpen(false);
-      showToast(`Order placed successfully. Order #${order._id}`, "success");
     } catch (error) {
       const message =
         error.response?.data?.message ||
@@ -124,9 +133,27 @@ export default function ShoppingCartPage() {
         "Unable to place your order. Please try again.";
       setActionError(message);
       showToast(message, "error");
-    } finally {
       setIsSubmittingOrder(false);
+      return;
     }
+
+    checkoutAttempt.current = null;
+    setSelectedIds([]);
+    setIsCheckoutOpen(false);
+    setIsSubmittingOrder(false);
+    setActionError("");
+    showToast("Order placed successfully", "success");
+    navigate("/my-orders");
+
+    void (async () => {
+      for (const item of selectedItems) {
+        try {
+          await removeFromCart(item.id, { silent: true });
+        } catch (cleanupError) {
+          console.error("Unable to clear cart item after successful order:", cleanupError);
+        }
+      }
+    })();
   };
 
   return (

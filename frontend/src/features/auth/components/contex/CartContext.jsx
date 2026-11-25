@@ -185,10 +185,12 @@ export function CartProvider({ children }) {
             setLoadError("");
             if (!silent) showToast("Removed from your shopping cart.", "success");
         } catch (error) {
-            showToast(
-                error.response?.data?.message || error.message || "Unable to remove item from cart.",
-                "error"
-            );
+            if (!silent) {
+                showToast(
+                    error.response?.data?.message || error.message || "Unable to remove item from cart.",
+                    "error"
+                );
+            }
             throw error;
         }
     };

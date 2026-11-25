@@ -5,6 +5,7 @@ const validateEnvironment = require("./src/config/validateEnvironment");
 const connectToDB = require("./src/config/database");
 const authSessionModel = require("./src/models/authSession.model");
 const rateLimitCounterModel = require("./src/models/rateLimitCounter.model");
+const orderIdempotencyModel = require("./src/models/orderIdempotency.model");
 const { attachSocketServer } = require("./src/realtime/socketServer");
 
 async function startServer() {
@@ -13,6 +14,7 @@ async function startServer() {
     await Promise.all([
         authSessionModel.init(),
         rateLimitCounterModel.init(),
+        orderIdempotencyModel.init(),
     ]);
 
     const app = require("./src/app");

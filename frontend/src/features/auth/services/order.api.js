@@ -5,12 +5,17 @@ export async function createOrder({
     totalAmount,
     address,
     paymentMethod,
+    idempotencyKey,
 }) {
     const response = await api.post("/api/orders", {
         products,
         totalAmount,
         address,
         paymentMethod,
+    }, {
+        headers: {
+            "Idempotency-Key": idempotencyKey,
+        },
     });
 
     if (!response.data?.order?._id) {

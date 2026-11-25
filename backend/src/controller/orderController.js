@@ -1,14 +1,12 @@
+const crypto = require("node:crypto");
 const orderModel = require("../models/order.model");
+const orderIdempotencyModel = require("../models/orderIdempotency.model");
 const productUploadModel = require("../models/productUpload.model");
 const adminNotificationModel = require("../models/adminNotification.model");
 const emailUtils = require("../utils/sendEmail");
 const mongoose = require("mongoose");
 const { publishUpdate } = require("../utils/liveUpdates");
-const {
-    createNotification,
-    notifyAdministrators,
-    notifyCustomerToReviewDeliveredOrder,
-} = require("../utils/customerNotificationService");
+const customerNotificationService = require("../utils/customerNotificationService");
 
 function escapeHtml(value) {
     return String(value)
@@ -21,6 +19,43 @@ function escapeHtml(value) {
 
 function isNonEmptyString(value) {
     return typeof value === "string" && value.trim().length > 0;
+}
+
+function getOrderRequestFingerprint({ products, totalAmount, address, paymentMethod }) {
+    const normalizedProducts = products
+        .map((item) => ({
+            product: String(item.product?._id || item.product),
+            quantity: Number(item.quantity),
+            price: Number(item.price),
+        }))
+        .sort((left, right) =>
+            left.product.localeCompare(right.product) ||
+            left.quantity - right.quantity ||
+            left.price - right.price
+        );
+    const normalizedAddress = {};
+    for (const field of [
+        "fullName",
+        "email",
+        "phoneNumber",
+        "region",
+        "address",
+        "street",
+        "city",
+        "state",
+    ]) {
+        normalizedAddress[field] = String(address[field] || "").trim();
+    }
+
+    return crypto
+        .createHash("sha256")
+        .update(JSON.stringify({
+            products: normalizedProducts,
+            totalAmount: Number(totalAmount),
+            address: normalizedAddress,
+            paymentMethod,
+        }))
+        .digest("hex");
 }
 
 function getOrderStockRequirements(products) {
@@ -101,6 +136,10 @@ async function reserveOrderStock(requirements) {
  * @access private (User only)
  */
 async function createOrder(req, res) {
+    let idempotencyRecord;
+    let orderSaved = false;
+    let savedOrder;
+
     try {
         const {
             products,
@@ -154,19 +193,59 @@ async function createOrder(req, res) {
             });
         }
 
-        let myOrdersUrl;
+        const idempotencyKey = String(
+            req.get?.("Idempotency-Key") ||
+            req.headers?.["idempotency-key"] ||
+            ""
+        ).trim();
+        if (!/^[A-Za-z0-9._:-]{8,128}$/.test(idempotencyKey)) {
+            return res.status(400).json({
+                message: "A valid Idempotency-Key header is required to place an order.",
+            });
+        }
+
+        const fingerprint = getOrderRequestFingerprint({
+            products,
+            totalAmount,
+            address,
+            paymentMethod,
+        });
+        const orderId = new mongoose.Types.ObjectId();
+
         try {
-            const configuredFrontendUrl = new URL(
-                process.env.FRONTEND_URL || "http://localhost:5173"
-            );
-            if (!["http:", "https:"].includes(configuredFrontendUrl.protocol)) {
-                throw new Error("FRONTEND_URL must use HTTP or HTTPS.");
+            idempotencyRecord = await orderIdempotencyModel.create({
+                user: req.user.id,
+                key: idempotencyKey,
+                fingerprint,
+                orderId,
+            });
+        } catch (error) {
+            if (error.code !== 11000) throw error;
+
+            const existingRecord = await orderIdempotencyModel.findOne({
+                user: req.user.id,
+                key: idempotencyKey,
+            });
+            if (!existingRecord) throw error;
+
+            if (existingRecord.fingerprint !== fingerprint) {
+                return res.status(409).json({
+                    code: "IDEMPOTENCY_KEY_REUSED",
+                    message: "This checkout key was already used for a different order.",
+                });
             }
-            myOrdersUrl = new URL("/my-orders", configuredFrontendUrl.origin).toString();
-        } catch (configurationError) {
-            console.error("Invalid FRONTEND_URL for order confirmation email:", configurationError);
-            return res.status(500).json({
-                message: "The My Orders page URL is not configured correctly. The order was not created."
+
+            const existingOrder = await orderModel.findById(existingRecord.orderId);
+            if (existingOrder) {
+                return res.status(201).json({
+                    message: "Order created successfully",
+                    order: existingOrder,
+                });
+            }
+
+            return res.status(409).json({
+                code: "ORDER_IN_PROGRESS",
+                message: "This order is still being processed. Please retry with the same checkout.",
             });
         }
 
@@ -175,6 +254,7 @@ async function createOrder(req, res) {
             let order;
             try {
                 order = new orderModel({
+                    _id: orderId,
                     user: req.user.id,
                     products,
                     totalAmount,
@@ -186,6 +266,8 @@ async function createOrder(req, res) {
                     }]
                 });
                 await order.save();
+                orderSaved = true;
+                savedOrder = order;
             } catch (saveError) {
                 try {
                     await restoreOrderStock(reservedStock);
@@ -195,65 +277,89 @@ async function createOrder(req, res) {
                 }
                 throw saveError;
             }
-            publishUpdate({ type: "products:changed" });
-            publishUpdate({ type: "order:changed", userId: req.user.id });
+            res.status(201).json({
+                message: "Order created successfully",
+                order,
+            });
 
-            try {
-                await adminNotificationModel.create({
-                    type: "order",
-                    title: "New Order Received",
-                    message: `${req.user.username} (${req.user.email}) placed order #${order._id} for ৳${order.totalAmount.toFixed(2)} with Cash on Delivery.`,
-                    user: req.user.id,
-                    userName: req.user.username,
-                    userEmail: req.user.email,
-                    order: order._id,
-                });
-                publishUpdate({ type: "notifications:changed" });
-            } catch (notificationError) {
-                console.error("Create Order Notification Error:", notificationError);
-                return res.status(500).json({
-                    message: "Order was saved, but its admin notification could not be created.",
-                    order,
-                });
-            }
-            try {
-                await notifyAdministrators({
-                    type: "order",
-                    title: "New order received",
-                    message: `${req.user.username || "A customer"} placed order #${order._id}.`,
-                    relatedId: order._id,
-                    to: "/orders",
-                    sourceKey: `admin-order:${order._id}`,
-                });
-            } catch (notificationError) {
-                console.error("Create App Order Notification Error:", notificationError);
-            }
+            void (async () => {
+                try {
+                    publishUpdate({ type: "products:changed" });
+                    publishUpdate({ type: "order:changed", userId: req.user.id });
+                } catch (updateError) {
+                    console.error("Publish Order Updates Error:", updateError);
+                }
+            })();
 
-            const customerName = req.user.username || address.fullName || "Customer";
-            const orderId = String(order._id);
-            const formattedTotalAmount = Number(order.totalAmount).toFixed(2);
-            const shippingRegion =
-                address.region ||
-                [address.city, address.state].filter(Boolean).join(", ");
-            const shippingAddress = [
-                address.address || address.street,
-                shippingRegion,
-            ].filter(Boolean).join(", ");
-            const message = [
-                `Dear ${customerName},`,
-                "",
-                "Thank you for your order! It has been successfully placed.",
-                `Order ID: #${orderId}`,
-                `Total: ৳${formattedTotalAmount}`,
-                `Payment: ${paymentMethod === "cash_on_delivery" ? "Cash on Delivery" : paymentMethod}`,
-                `Shipping address: ${shippingAddress}`,
-                "",
-                "Track your order in My Orders:",
-                myOrdersUrl,
-                "",
-                "Thank you for shopping with MAVO!"
-            ].join("\n");
-            const emailHtml = `
+            void (async () => {
+                try {
+                    await adminNotificationModel.create({
+                        type: "order",
+                        title: "New Order Received",
+                        message: `${req.user.username} (${req.user.email}) placed order #${order._id} for ৳${order.totalAmount.toFixed(2)} with Cash on Delivery.`,
+                        user: req.user.id,
+                        userName: req.user.username,
+                        userEmail: req.user.email,
+                        order: order._id,
+                    });
+                    publishUpdate({ type: "notifications:changed" });
+                } catch (notificationError) {
+                    console.error("Create Order Notification Error:", notificationError);
+                }
+            })();
+
+            void (async () => {
+                try {
+                    await customerNotificationService.notifyAdministrators({
+                        type: "order",
+                        title: "New order received",
+                        message: `${req.user.username || "A customer"} placed order #${order._id}.`,
+                        relatedId: order._id,
+                        to: "/orders",
+                        sourceKey: `admin-order:${order._id}`,
+                    });
+                } catch (notificationError) {
+                    console.error("Create App Order Notification Error:", notificationError);
+                }
+            })();
+
+            void (async () => {
+                try {
+                    const configuredFrontendUrl = new URL(
+                        process.env.FRONTEND_URL || "http://localhost:5173"
+                    );
+                    if (!["http:", "https:"].includes(configuredFrontendUrl.protocol)) {
+                        throw new Error("FRONTEND_URL must use HTTP or HTTPS.");
+                    }
+                    const myOrdersUrl = new URL(
+                        "/my-orders",
+                        configuredFrontendUrl.origin
+                    ).toString();
+                    const customerName = req.user.username || address.fullName || "Customer";
+                    const orderId = String(order._id);
+                    const formattedTotalAmount = Number(order.totalAmount).toFixed(2);
+                    const shippingRegion =
+                        address.region ||
+                        [address.city, address.state].filter(Boolean).join(", ");
+                    const shippingAddress = [
+                        address.address || address.street,
+                        shippingRegion,
+                    ].filter(Boolean).join(", ");
+                    const message = [
+                        `Dear ${customerName},`,
+                        "",
+                        "Thank you for your order! It has been successfully placed.",
+                        `Order ID: #${orderId}`,
+                        `Total: ৳${formattedTotalAmount}`,
+                        `Payment: ${paymentMethod === "cash_on_delivery" ? "Cash on Delivery" : paymentMethod}`,
+                        `Shipping address: ${shippingAddress}`,
+                        "",
+                        "Track your order in My Orders:",
+                        myOrdersUrl,
+                        "",
+                        "Thank you for shopping with MAVO!"
+                    ].join("\n");
+                    const emailHtml = `
                 <!doctype html>
                 <html lang="en">
                     <head>
@@ -327,18 +433,45 @@ async function createOrder(req, res) {
                         </table>
                     </body>
                 </html>
-            `;
+                    `;
 
-            await emailUtils.sendEmail(req.user.email, "Order Confirmation", message, emailHtml);
+                    await emailUtils.sendEmail(
+                        req.user.email,
+                        "Order Confirmation",
+                        message,
+                        emailHtml
+                    );
+                } catch (emailError) {
+                    console.error("Send Order Confirmation Email Error:", emailError);
+                }
+            })();
 
-            res.status(201).json({
-                message: "Order created successfully",
-                order
-            });
+            return;
         }
 
     } catch (error) {
-        res.status(error.statusCode || 500).json({
+        if (orderSaved) {
+            if (res.headersSent) {
+                console.error("Order response was already sent:", error);
+                return;
+            }
+            return res.status(201).json({
+                message: "Order created successfully",
+                order: savedOrder,
+            });
+        }
+
+        if (idempotencyRecord) {
+            try {
+                await orderIdempotencyModel.deleteOne({
+                    _id: idempotencyRecord._id,
+                });
+            } catch (cleanupError) {
+                console.error("Clear Failed Order Idempotency Record Error:", cleanupError);
+            }
+        }
+
+        return res.status(error.statusCode || 500).json({
             message: error.message
         });
     }
@@ -610,7 +743,7 @@ async function updateOrderStatus(req, res) {
                 await order.save();
                 const timelineUpdate = order.timeline[order.timeline.length - 1];
                 try {
-                    await createNotification({
+                    await customerNotificationService.createNotification({
                         recipient: order.user,
                         type: "order",
                         title: `Order #${String(order._id).slice(-8)} updated`,
@@ -624,7 +757,7 @@ async function updateOrderStatus(req, res) {
                 }
                 if (status === "delivered") {
                     try {
-                        await notifyCustomerToReviewDeliveredOrder(order);
+                        await customerNotificationService.notifyCustomerToReviewDeliveredOrder(order);
                     } catch (notificationError) {
                         console.error("Create Delivered Order Review Notifications Error:", notificationError);
                     }

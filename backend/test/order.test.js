@@ -2,19 +2,24 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const orderController = require("../src/controller/orderController");
 const orderModel = require("../src/models/order.model");
+const orderIdempotencyModel = require("../src/models/orderIdempotency.model");
 const productUploadModel = require("../src/models/productUpload.model");
 const adminNotificationModel = require("../src/models/adminNotification.model");
+const emailUtils = require("../src/utils/sendEmail");
+const customerNotificationService = require("../src/utils/customerNotificationService");
 const mongoose = require("mongoose");
 
 function createResponse() {
     return {
         statusCode: undefined,
         body: undefined,
+        jsonCalls: 0,
         status(code) {
             this.statusCode = code;
             return this;
         },
         json(body) {
+            this.jsonCalls += 1;
             this.body = body;
             return this;
         },
@@ -85,6 +90,17 @@ test("order schema rejects shipping addresses missing region or address", async 
         assert.ok(error.errors.address);
         return true;
     });
+});
+
+test("order idempotency is uniquely scoped to each user and key", () => {
+    const hasUserKeyUniqueIndex = orderIdempotencyModel.schema.indexes().some(
+        ([fields, options]) =>
+            fields.user === 1 &&
+            fields.key === 1 &&
+            options.unique === true
+    );
+
+    assert.equal(hasUserKeyUniqueIndex, true);
 });
 
 test("customer cancellation updates only an owned pending order and restores stock", async (t) => {
@@ -336,6 +352,8 @@ test("order stock reservation restores earlier deductions if an item is unavaila
 
 test("order creation reports insufficient inventory without creating an order", async (t) => {
     const productId = "507f1f77bcf86cd799439011";
+    t.mock.method(orderIdempotencyModel, "create", async () => ({ _id: "claim-1" }));
+    t.mock.method(orderIdempotencyModel, "deleteOne", async () => ({ deletedCount: 1 }));
     const findOneAndUpdate = t.mock.method(
         productUploadModel,
         "findOneAndUpdate",
@@ -346,6 +364,7 @@ test("order creation reports insufficient inventory without creating an order", 
     await orderController.createOrder(
         {
             user: { id: "507f1f77bcf86cd799439012" },
+            headers: { "idempotency-key": "checkout-attempt-001" },
             body: {
                 products: [{ product: productId, quantity: 3, price: 10 }],
                 totalAmount: 30,
@@ -364,6 +383,146 @@ test("order creation reports insufficient inventory without creating an order", 
     assert.equal(response.statusCode, 400);
     assert.match(response.body.message, /insufficient stock/i);
     assert.equal(findOneAndUpdate.mock.callCount(), 1);
+});
+
+test("order response is immediate and repeated checkout requests replay the saved order", async (t) => {
+    const productId = "507f1f77bcf86cd799439011";
+    const userId = "507f1f77bcf86cd799439012";
+    let idempotencyRecord;
+    let savedOrder;
+    const duplicateKeyError = Object.assign(new Error("Duplicate key"), { code: 11000 });
+
+    t.mock.method(console, "error", () => {});
+    t.mock.method(orderIdempotencyModel, "create", async (record) => {
+        if (idempotencyRecord) throw duplicateKeyError;
+        idempotencyRecord = { ...record, _id: new mongoose.Types.ObjectId() };
+        return idempotencyRecord;
+    });
+    t.mock.method(orderIdempotencyModel, "findOne", async () => idempotencyRecord);
+    t.mock.method(productUploadModel, "findOneAndUpdate", async () => ({ _id: productId }));
+    t.mock.method(orderModel.prototype, "save", async function saveOrder() {
+        savedOrder = this;
+        return this;
+    });
+    t.mock.method(orderModel, "findById", async () => savedOrder);
+    t.mock.method(adminNotificationModel, "create", async () => {
+        throw new Error("Admin notification failed");
+    });
+    t.mock.method(customerNotificationService, "notifyAdministrators", async () => {
+        throw new Error("App notification failed");
+    });
+    t.mock.method(emailUtils, "sendEmail", async () => {
+        throw new Error("Email delivery failed");
+    });
+
+    const request = {
+        user: { id: userId, username: "Customer", email: "customer@example.com" },
+        headers: { "idempotency-key": "checkout-attempt-002" },
+        body: {
+            products: [{ product: productId, quantity: 1, price: 10 }],
+            totalAmount: 10,
+            address: {
+                fullName: "Customer",
+                email: "customer@example.com",
+                phoneNumber: "55512345",
+                region: "Dhaka",
+                address: "1 Main Street",
+            },
+        },
+    };
+
+    const firstResponse = createResponse();
+    await orderController.createOrder(request, firstResponse);
+
+    assert.equal(firstResponse.statusCode, 201);
+    assert.equal(firstResponse.jsonCalls, 1);
+    assert.equal(firstResponse.body.order._id.toString(), idempotencyRecord.orderId.toString());
+
+    const replayResponse = createResponse();
+    await orderController.createOrder(request, replayResponse);
+
+    assert.equal(replayResponse.statusCode, 201);
+    assert.equal(replayResponse.jsonCalls, 1);
+    assert.equal(replayResponse.body.order._id.toString(), firstResponse.body.order._id.toString());
+
+    const changedPayloadResponse = createResponse();
+    await orderController.createOrder({
+        ...request,
+        body: { ...request.body, totalAmount: 11 },
+    }, changedPayloadResponse);
+
+    assert.equal(changedPayloadResponse.statusCode, 409);
+    assert.equal(changedPayloadResponse.body.code, "IDEMPOTENCY_KEY_REUSED");
+});
+
+test("concurrent submissions with one key reserve inventory and create an order only once", async (t) => {
+    const productId = "507f1f77bcf86cd799439011";
+    const userId = "507f1f77bcf86cd799439012";
+    let idempotencyRecord;
+    let savedOrder;
+    let releaseStockReservation;
+    let signalStockReservationStarted;
+    const stockReservationGate = new Promise((resolve) => {
+        releaseStockReservation = resolve;
+    });
+    const stockReservationStarted = new Promise((resolve) => {
+        signalStockReservationStarted = resolve;
+    });
+    const duplicateKeyError = Object.assign(new Error("Duplicate key"), { code: 11000 });
+
+    t.mock.method(console, "error", () => {});
+    t.mock.method(orderIdempotencyModel, "create", async (record) => {
+        if (idempotencyRecord) throw duplicateKeyError;
+        idempotencyRecord = { ...record, _id: new mongoose.Types.ObjectId() };
+        return idempotencyRecord;
+    });
+    t.mock.method(orderIdempotencyModel, "findOne", async () => idempotencyRecord);
+    const reserveStock = t.mock.method(productUploadModel, "findOneAndUpdate", async () => {
+        signalStockReservationStarted();
+        await stockReservationGate;
+        return { _id: productId };
+    });
+    const saveOrder = t.mock.method(orderModel.prototype, "save", async function saveOrder() {
+        savedOrder = this;
+        return this;
+    });
+    t.mock.method(orderModel, "findById", async () => savedOrder);
+    t.mock.method(adminNotificationModel, "create", async () => {});
+    t.mock.method(customerNotificationService, "notifyAdministrators", async () => {});
+    t.mock.method(emailUtils, "sendEmail", async () => {});
+
+    const request = {
+        user: { id: userId, username: "Customer", email: "customer@example.com" },
+        headers: { "idempotency-key": "checkout-attempt-003" },
+        body: {
+            products: [{ product: productId, quantity: 1, price: 10 }],
+            totalAmount: 10,
+            address: {
+                fullName: "Customer",
+                email: "customer@example.com",
+                phoneNumber: "55512345",
+                region: "Dhaka",
+                address: "1 Main Street",
+            },
+        },
+    };
+    const firstResponse = createResponse();
+    const firstRequest = orderController.createOrder(request, firstResponse);
+    await stockReservationStarted;
+
+    const concurrentResponse = createResponse();
+    await orderController.createOrder(request, concurrentResponse);
+
+    assert.equal(concurrentResponse.statusCode, 409);
+    assert.equal(reserveStock.mock.callCount(), 1);
+    assert.equal(saveOrder.mock.callCount(), 0);
+
+    releaseStockReservation();
+    await firstRequest;
+
+    assert.equal(firstResponse.statusCode, 201);
+    assert.equal(reserveStock.mock.callCount(), 1);
+    assert.equal(saveOrder.mock.callCount(), 1);
 });
 
 test("order creation rejects incomplete shipping details before reserving inventory", async (t) => {
