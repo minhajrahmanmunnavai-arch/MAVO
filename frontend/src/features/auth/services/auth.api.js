@@ -8,14 +8,63 @@ const apiBaseURL = (
 
 export const api = axios.create({
     baseURL: apiBaseURL,
-    withCredentials: true
+    withCredentials: true,
+    timeout: 60000
 });
 
 // Refresh API-এর জন্য আলাদা Axios instance
 const refreshApi = axios.create({
     baseURL: apiBaseURL,
-    withCredentials: true
+    withCredentials: true,
+    timeout: 60000
 });
+
+const USER_FACING_API_ERROR = "Something went wrong. Please try again.";
+const TECHNICAL_ERROR_PATTERN =
+    /AxiosError|Network Error|API connection failed|Could not connect|ECONN|ETIMEDOUT|Request failed with status code|timeout/i;
+
+const normalizeApiError = (error) => {
+    const isTimeout =
+        error.code === "ECONNABORTED" ||
+        error.code === "ETIMEDOUT" ||
+        /timeout/i.test(error.message || "");
+    const isNetworkError = !error.response;
+
+    const responseMessage = error.response?.data?.message;
+    const containsTechnicalDetails =
+        TECHNICAL_ERROR_PATTERN.test(error.message || "") ||
+        TECHNICAL_ERROR_PATTERN.test(
+            typeof responseMessage === "string" ? responseMessage : ""
+        );
+
+    if (
+        isTimeout ||
+        isNetworkError ||
+        error.response?.status >= 500 ||
+        containsTechnicalDetails
+    ) {
+        error.message = USER_FACING_API_ERROR;
+        error.name = "Error";
+
+        if (
+            (error.response?.status >= 500 || containsTechnicalDetails) &&
+            error.response.data &&
+            typeof error.response.data === "object"
+        ) {
+            error.response.data = {
+                ...error.response.data,
+                message: USER_FACING_API_ERROR,
+            };
+        }
+    }
+
+    return error;
+};
+
+refreshApi.interceptors.response.use(
+    (response) => response,
+    (error) => Promise.reject(normalizeApiError(error))
+);
 
 // Refresh request একসঙ্গে একাধিকবার হওয়া আটকাবে
 let isRefreshing = false;
@@ -50,6 +99,8 @@ api.interceptors.response.use(
     },
 
     async (error) => {
+        normalizeApiError(error);
+
         const originalRequest = error.config;
 
         if (

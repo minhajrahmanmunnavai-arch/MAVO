@@ -23,7 +23,7 @@ function createSocket() {
     autoConnect: false,
     auth: (callback) => {
       const requestGeneration = connectionGeneration;
-      api.get("/api/auth/socket-token")
+      api.get("/api/auth/socket-token", { timeout: 10000 })
         .then(({ data }) => {
           if (
             !enabled ||

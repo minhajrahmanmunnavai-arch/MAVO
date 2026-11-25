@@ -6,7 +6,7 @@ import { useProduct } from "../../../Hooks/useProduct.js";
 
 const All = () => {
 
-  const { products } = useProduct();
+  const { products, loading, productsError, fetchProducts } = useProduct();
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { addToCart } = useCart();
 
@@ -26,6 +26,33 @@ const All = () => {
   return (
     <section className="mt-25 px-37">
       <FlashOfferings />
+
+      {productsError && (
+        <div
+          role="alert"
+          className="mb-4 flex flex-wrap items-center gap-3 text-sm text-red-600"
+        >
+          <span>{productsError}</span>
+          <button
+            type="button"
+            className="rounded-md border border-red-600 px-3 py-1 font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={loading}
+            onClick={fetchProducts}
+          >
+            {loading ? (
+              <span className="inline-flex items-center gap-2">
+                <span
+                  aria-label="Loading"
+                  className="h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent"
+                />
+                Loading...
+              </span>
+            ) : (
+              "Try Again"
+            )}
+          </button>
+        </div>
+      )}
 
       <div className="flex gap-7 flex-2/4">
 

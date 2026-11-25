@@ -9,6 +9,7 @@ export const ProductProvider = ({ children }) => {
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [productsError, setProductsError] = useState("");
     const [toast, setToast] = useState(null);
 
     const showToast = useCallback((message, type = "info") => {
@@ -21,20 +22,19 @@ export const ProductProvider = ({ children }) => {
 
     const fetchProducts = useCallback(async () => {
         setLoading(true);
+        setProductsError("");
 
         try {
             const data = await getAllProducts();
 
             setProducts(data);
         } catch (error) {
-            showToast(
-                error.response?.data?.message || error.message || "Error fetching products",
-                "error"
-            );
+            console.error("Error fetching products:", error);
+            setProductsError("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
         }
-    }, [showToast]);
+    }, []);
 
     useEffect(() => {
         fetchProducts();
@@ -51,6 +51,7 @@ export const ProductProvider = ({ children }) => {
                 setProducts,
                 loading,
                 setLoading,
+                productsError,
                 fetchProducts,
                 showToast,
             }}
